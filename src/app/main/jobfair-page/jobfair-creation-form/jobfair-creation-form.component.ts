@@ -6,6 +6,7 @@ import { MatChipInputEvent } from '@angular/material';
 import { validateJobFairJSON, validatePackageJSON } from 'src/utils/parsing';
 import { jobFairFromJSON, jobFairServicesFromJSON, jobFairPackagesFromJSON, JobFairSchedule, JobFairPackage, JobFairService } from 'src/models/jobfair';
 import { jobFairScheduleTypes } from 'src/constants';
+import { JobfairService } from 'src/services/jobfair.service';
 
 @Component({
   selector: 'app-jobfair-creation-form',
@@ -29,6 +30,8 @@ export class JobfairCreationFormComponent implements OnInit {
     accept: '.json,application/json',
   };
 
+  loading = false;
+
   imageOptions = {
     maxWidth: 300,
     minWidth: 100,
@@ -41,6 +44,7 @@ export class JobfairCreationFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private jobfairService: JobfairService,
   ) { }
 
   ngOnInit() {
@@ -50,10 +54,10 @@ export class JobfairCreationFormComponent implements OnInit {
     });
     this.basicInfoStep = this.formBuilder.group({
       name: ['', Validators.required],
-      startDate: [{ value: '', disabled: true }, Validators.required],
-      endDate: [{ value: '', disabled: true }, Validators.required],
-      startTime: [{ value: '', disabled: true }, Validators.required],
-      endTime: [{ value: '', disabled: true }, Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
       place: ['', Validators.required],
       description: ['', Validators.required],
       areas: this.formBuilder.array([]),
@@ -77,8 +81,8 @@ export class JobfairCreationFormComponent implements OnInit {
     return this.formBuilder.group({
       type: [schedule!.type, Validators.required],
       area: [schedule!.area, Validators.required],
-      from: [{ value: schedule!.from, disabled: true }, Validators.required],
-      to: [{ value: schedule!.to, disabled: true }, Validators.required],
+      from: [schedule!.from, Validators.required],
+      to: [schedule!.to, Validators.required],
     });
   }
 
@@ -89,7 +93,7 @@ export class JobfairCreationFormComponent implements OnInit {
       numOfLessons: [jobFairPackage!.numOfLessons, Validators.required],
       numOfWorkshops: [jobFairPackage!.numOfWorkshops, Validators.required],
       numOfPresentations: [jobFairPackage!.numOfPresentations, Validators.required],
-      totalNumOfCompanies: [jobFairPackage!.totalNumOfCompanies, Validators.required],
+      totalNumOfCompanies: jobFairPackage!.totalNumOfCompanies,
       content: this.formBuilder.array(jobFairPackage!.content),
       price: [jobFairPackage!.price, Validators.required],
     });
@@ -185,5 +189,24 @@ export class JobfairCreationFormComponent implements OnInit {
 
   onRemoveService(index) {
     this.serviceControls.removeAt(index);
+  }
+
+  get formValues() {
+    return {
+      ...this.basicInfoStep.value,
+      ...this.packageStep.value,
+      ...this.advancedInfoStep.value,
+    }
+  }
+
+  async onSubmit() {
+    this.loading = true;
+
+    try {
+      // await this.jobfairService.saveFair(this.formValues);
+      // this.loading = false;
+    } catch (err) {
+      this.loading = false;
+    }
   }
 }

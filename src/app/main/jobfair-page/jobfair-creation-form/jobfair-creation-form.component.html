@@ -27,26 +27,26 @@
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>Start Date</mat-label>
-              <input matInput [matDatepicker]="pickerStartDate" formControlName="startDate">
-              <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+              <input matInput readonly [matDatepicker]="pickerStartDate" formControlName="startDate">
+              <mat-datepicker-toggle matSuffix disabled [for]="pickerStartDate"></mat-datepicker-toggle>
               <mat-datepicker #pickerStartDate></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>End Date</mat-label>
-              <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate">
-              <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+              <input matInput readonly [matDatepicker]="pickerEndDate" formControlName="endDate">
+              <mat-datepicker-toggle matSuffix disabled [for]="pickerEndDate"></mat-datepicker-toggle>
               <mat-datepicker #pickerEndDate></mat-datepicker>
             </mat-form-field>
           </div>
           <div class='form__content--split__side'>
             <mat-form-field appearance="standard">
               <mat-label>Start Time</mat-label>
-              <input matInput [ngxTimepicker]="startTimePicker" formControlName="startTime">
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="startTimePicker" formControlName="startTime">
               <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>End Time</mat-label>
-              <input matInput [ngxTimepicker]="endTimePicker" formControlName="endTime">
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" formControlName="endTime">
               <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
@@ -98,12 +98,12 @@
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>From</mat-label>
-              <input matInput [ngxTimepicker]="scheduleFromTimePicker" formControlName="from" />
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleFromTimePicker" formControlName="from" />
               <ngx-material-timepicker #scheduleFromTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>To</mat-label>
-              <input matInput [ngxTimepicker]="scheduleToTimePicker" formControlName="to" />
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleToTimePicker" formControlName="to" />
               <ngx-material-timepicker #scheduleToTimePicker></ngx-material-timepicker>
             </mat-form-field>
           </li>
@@ -174,7 +174,7 @@
             <mat-divider></mat-divider>
           </li>
         </ul>
-        <h1>Services Info</h1>
+        <h1>Optional Services Info</h1>
         <ul formArrayName="services">
           <button mat-button (click)="onAddService()">
             <mat-icon>add</mat-icon>
@@ -203,10 +203,74 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Finalize</ng-template>
-    You are now done.
-    <div class="step-controls">
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+    <div class="content-container">
+      <div class="content">
+        <h1>Basic Info</h1>
+        <div class="label-container">
+          <app-label-field [value]="formValues.name" label="Name"></app-label-field>
+          <app-label-field [value]="formValues.startDate | date" label="Start Date"></app-label-field>
+          <app-label-field [value]="formValues.endDate | date" label="End Date"></app-label-field>
+          <app-label-field [value]="formValues.startTime" label="Start Time"></app-label-field>
+          <app-label-field [value]="formValues.endTime" label="End Time"></app-label-field>
+          <app-label-field [value]="formValues.place" label="Place"></app-label-field>
+          <app-label-field [value]="formValues.description" label="Description"></app-label-field>
+        </div>
+        <mat-divider></mat-divider>
+        <h1>Areas</h1>
+        <ul *ngFor="let area of formValues.areas">
+          <li>{{area}} </li>
+        </ul>
+        <mat-divider></mat-divider>
+        <h1>Schedules</h1>
+        <ul *ngFor="let schedule of formValues.schedules">
+          <li class="label-container">
+            <app-label-field [value]="schedule.type" label="Type"></app-label-field>
+            <app-label-field [value]="schedule.area" label="Area"></app-label-field>
+            <app-label-field [value]="schedule.from" label="From"></app-label-field>
+            <app-label-field [value]="schedule.to" label="To"></app-label-field>
+          </li>
+        </ul>
+        <mat-divider></mat-divider>
+        <h1>Packages</h1>
+        <ul *ngFor="let package of formValues.packages">
+          <li>
+            <div class="label-container">
+              <app-label-field [value]="package.title" label="Title "></app-label-field>
+              <app-label-field [value]="package.videoPromotion" label="Video promotion"></app-label-field>
+              <app-label-field [value]="package.numOfLessons" label="Num of lessons"></app-label-field>
+              <app-label-field [value]="package.numOfWorkshops" label="Num of workshops"></app-label-field>
+              <app-label-field [value]="package.numOfPresentations" label="Num of presentations"></app-label-field>
+              <app-label-field [value]="package.totalNumOfCompanies" label="Total num of companies"></app-label-field>
+              <app-label-field [value]="package.price" label="price"></app-label-field>
+            </div>
+            <h2 class="package-content">Additional Content</h2>
+            <ul *ngFor="let content of package.content">
+              <li>{{content}}</li>
+            </ul>
+          </li>
+          <mat-divider></mat-divider>
+        </ul>
+        <mat-divider></mat-divider>
+        <h1>Optional Services</h1>
+        <ul *ngFor="let service of formValues.services">
+          <li class="label-container">
+            <app-label-field [value]="service.price" label="Price"></app-label-field>
+            <app-label-field [value]="service.description" label="Description"></app-label-field>
+          </li>
+          <mat-divider></mat-divider>
+        </ul>
+      </div>
+      <div class="step-controls step-controls--wide">
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button (click)="onSubmit()">
+          <div class="form__submit">
+            <span>Submit</span>
+            <ng-container *ngIf="loading">
+              <mat-spinner [diameter]="20"></mat-spinner>
+            </ng-container>
+          </div>
+        </button>
+      </div>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

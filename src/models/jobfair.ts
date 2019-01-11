@@ -1,4 +1,11 @@
-import { differenceInCalendarDays, parse, differenceInHours, addHours, addDays } from 'date-fns';
+import {
+  differenceInCalendarDays,
+  parse,
+  differenceInHours,
+  addHours,
+  addDays,
+  format,
+} from 'date-fns';
 
 export interface JobFairJSON {
   Fairs: Array<{
@@ -33,8 +40,8 @@ export interface JobFair {
 }
 
 export interface JobFairSchedule {
-  from: Date;
-  to: Date;
+  from: string;
+  to: string;
   type: string;
   area: string;
   application: any;
@@ -94,8 +101,8 @@ const schedulesFromJSON = (json: JobFairJSON): JobFairSchedule[] => {
       const from = addHours(addDays(startDate, day), hour);
      
       schedules.push({
-        from,
-        to: addHours(from, 1),
+        from: format(from, 'HH:mm:ss'),
+        to: format(addHours(from, 1), 'HH:mm:ss'),
         type: '',
         area: '',
         application: null,
@@ -124,7 +131,7 @@ export const jobFairPackagesFromJSON = (json: JobFairPackageJSON): JobFairPackag
   numOfLessons: p.NoLessons,
   numOfWorkshops: p.NoWorkchops,
   numOfPresentations: p.NoPresentation,
-  totalNumOfCompanies: typeof p.MaxCompanies === 'string' ? Infinity : p.MaxCompanies,
+  totalNumOfCompanies: typeof p.MaxCompanies === 'string' ? null : p.MaxCompanies,
   content: p.Content,
   price: p.Price,
 }));

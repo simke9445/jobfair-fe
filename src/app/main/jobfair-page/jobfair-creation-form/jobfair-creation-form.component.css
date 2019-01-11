@@ -20,6 +20,10 @@
   justify-content: space-between;
 }
 
+.step-controls--wide {
+  width: 200px;
+}
+
 .upload-container {
   display: flex;
   justify-content: space-around;
@@ -79,4 +83,31 @@ ul, li {
 
 .service-item > .description-field {
   flex: 1 1 auto;
+}
+
+.label-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.label-container > app-label-field {
+  margin: 5px;
+  flex: 0 1 200px;
+}
+
+.form__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+}
+
+.form__submit > mat-spinner {
+  margin-left: 20px;
+}
+
+.package-content {
+  margin-top: 16px;
 }
