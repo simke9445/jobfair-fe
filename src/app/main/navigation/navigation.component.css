@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  padding-right: 10px;
+}
+
+.icon {
+  font-size: 32px;
+  line-height: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.navigation {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.title {
+  font-weight: 500;
+  padding: 20px;
+}
+
+.navigation-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-left: 20px;
+}
+
+.navigation-items > button {
+  width: 100%;
+  text-align: left;
+}

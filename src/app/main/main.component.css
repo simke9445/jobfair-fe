@@ -1,0 +1,33 @@
+.main {
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.main__sidebar {
+  width: 200px;
+  display: flex;
+}
+
+.main__footer {
+  height: 7.5%;
+  display: flex;
+}
+
+.main__header {
+  height: 10%;
+  display: flex;
+}
+
+.main__content {
+  flex: 1 1 auto;
+  height: 1px; /* hAhaa, flex loves when height is set */
+  display: flex;
+  overflow-y: scroll;
+}
+
+.main__container {
+  display: flex;
+  flex-direction: column;
+}

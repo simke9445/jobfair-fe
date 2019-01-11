@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Create Contest Form</h1>
+<form mat-dialog-content [formGroup]="contestForm" class="form-container">
+  <mat-form-field appearance="standard">
+    <mat-label>Position</mat-label>
+    <input matInput formControlName="position" />
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-select placeholder="Choose a type" formControlName="type">
+      <mat-option *ngFor="let type of contestTypes" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>From</mat-label>
+    <input matInput [matDatepicker]="pickerFrom" formControlName="from">
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>To</mat-label>
+    <input matInput [matDatepicker]="pickerTo" formControlName="to">
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Close</button>
+  <button mat-button (click)="onSave()">
+    <div class="save-control">
+      <span>Save</span>
+      <ng-container *ngIf="loading">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </ng-container>
+    </div>
+  </button>
+</div>

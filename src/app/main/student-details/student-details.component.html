@@ -1,0 +1,85 @@
+<div *ngIf="!loading">
+  <div class="details-container">
+    <img mat-avatar src="{{student.profileImage}}" />
+    <div class="details-side">
+      <div class="details-title">{{student.firstName}} {{student.lastName}}</div>
+      <div class="label-container">
+        <app-label-field [value]="student.phoneNumber" label="Phone Number"></app-label-field>
+        <app-label-field [value]="student.email" label="Email"></app-label-field>
+        <app-label-field [value]="student.yearOfStudy" label="Year of Study"></app-label-field>
+        <app-label-field [value]="student.hasGraduated ? 'Yes' : 'No'" label="Has Graduated"></app-label-field>
+      </div>
+    </div>
+  </div>
+  <mat-divider class="divider"></mat-divider>
+  <button mat-raised-button (click)="onBiographyUpdate(student)">Update Biography</button>
+  <div class="biography-container">
+    <h1>Biography</h1>
+    <ul>
+      <li>
+        <h2>Personal Info</h2>
+        <div class="label-container">
+          <app-label-field [value]="student.biography.firstName" label="First Name"></app-label-field>
+          <app-label-field [value]="student.biography.lastName" label="lastName"></app-label-field>
+          <app-label-field [value]="student.biography.streetAddress" label="Street Address"></app-label-field>
+          <app-label-field [value]="student.biography.postalCode" label="Postal Code"></app-label-field>
+          <app-label-field [value]="student.biography.city" label="City"></app-label-field>
+          <app-label-field [value]="student.biography.phoneNumber" label="Phone Number"></app-label-field>
+          <app-label-field [value]="student.biography.email" label="Email"></app-label-field>
+          <app-label-field [value]="student.biography.website" label="Website"></app-label-field>
+          <app-label-field [value]="student.biography.skypeName" label="Skype Name"></app-label-field>
+        </div>
+      </li>
+      <li *ngIf="student.biography.educationExperiences.length > 0">
+        <h2>Education</h2>
+        <ul class="exp-list">
+          <li *ngFor="let exp of student.biography.educationExperiences">
+            <h3>{{exp.position}} {{exp.from | date}} - {{exp.to | date}}</h3>
+            <div class="label-container">
+              <app-label-field [value]="exp.isOngoing ? 'Yes' : 'No'" label="Is ongoing"></app-label-field>
+              <app-label-field [value]="exp.organisationName" label="Organisation Name"></app-label-field>
+              <app-label-field [value]="exp.city" label="City"></app-label-field>
+              <app-label-field [value]="exp.country" label="Country"></app-label-field>
+            </div>
+            <div class="exp-description">{{exp.description}}</div>
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="student.biography.workExperiences.length > 0">
+        <h2>Work Experience</h2>
+        <ul>
+          <li *ngFor="let exp of student.biography.workExperiences">
+            <h3>{{exp.position}} {{exp.from | date}} - {{exp.to | date}}</h3>
+            <div class="label-container">
+              <app-label-field [value]="exp.isOngoing ? 'Yes' : 'No'" label="Is ongoing"></app-label-field>
+              <app-label-field [value]="exp.organisationName" label="Organisation Name"></app-label-field>
+              <app-label-field [value]="exp.city" label="City"></app-label-field>
+              <app-label-field [value]="exp.country" label="Country"></app-label-field>
+            </div>
+            <div class="exp-description">{{exp.description}}</div>
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="student.biography.spokenLanguages.length > 0">
+        <h2>Spoken languages</h2>
+        <ul>
+          <li *ngFor="let lang of student.biography.spokenLanguages">
+            {{lang}}
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="student.biography.skills.length > 0">
+        <h2>Skills</h2>
+        <ul>
+          <li *ngFor="let skill of student.biography.skills">
+            {{skill}}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner [diameter]="60"></mat-spinner>
+</div>

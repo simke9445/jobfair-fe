@@ -1,0 +1,26 @@
+.mat-form-field--no-underline .mat-input-underline {
+  background-color: transparent;
+}
+
+.save-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+}
+
+.save-control > mat-spinner {
+  margin-left: 20px;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.form-container {
+  padding: 30px;
+}
+
+.mat-form-field {
+  width: 100%;
+}

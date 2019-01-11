@@ -1,0 +1,65 @@
+.form__content--split {
+  display: flex;
+  width: 100%;
+}
+
+.form__content--split__side {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+  align-items: flex-start;
+}
+
+.form__content--split__side > .mat-form-field {
+  width: 120px;
+}
+
+.mat-form-field--no-underline .mat-input-underline {
+  background-color: transparent;
+}
+
+.form-container {
+  height: 450px;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.exp-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ul, li {
+  list-style: none;
+}
+
+.exp-item {
+  display: flex;
+}
+
+.exp-item > button {
+  height: 40px;
+}
+
+.mat-divider {
+  margin: 20px 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.save-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+}
+
+.save-control > mat-spinner {
+  margin-left: 20px;
+}

@@ -1,0 +1,18 @@
+<h1 class="title">Pages</h1>
+<div class="navigation-items">
+  <button mat-button (click)="onNavigate('companies')">
+    <mat-icon>donut_large</mat-icon>
+    Companies
+  </button>
+  <button mat-button (click)="onNavigate('contests')">
+    <mat-icon>grade</mat-icon>
+    Contests
+  </button>
+  <button mat-button (click)="onNavigate('jobFair')">
+    <mat-icon>event</mat-icon>
+    Job Fair
+  </button>
+</div>
+<button mat-icon-button (click)="onNavigationClick()" class="navigation">
+  <mat-icon class="icon">arrow_back</mat-icon>
+</button>

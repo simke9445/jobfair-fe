@@ -1,0 +1,52 @@
+<div *ngIf="!loading">
+  <div class="details-container">
+    <img mat-avatar src="{{company.logoImage}}" />
+    <div class="details-side">
+      <div class="details-title">{{company.name}}</div>
+      <div class="label-container">
+        <app-label-field [value]="company.city" label="City"></app-label-field>
+        <app-label-field [value]="company.address" label="Address"></app-label-field>
+        <app-label-field [value]="company.director" label="Director"></app-label-field>
+        <app-label-field [value]="company.pib" label="PIB"></app-label-field>
+        <app-label-field [value]="company.numberOfEmployees" label="Employee count"></app-label-field>
+        <app-label-field [value]="company.email" label="Email"></app-label-field>
+        <app-label-field [value]="company.website" label="Website"></app-label-field>
+        <app-label-field [value]="company.bussinessArea" label="Bussiness Area"></app-label-field>
+        <app-label-field [value]="company.address" label="Address"></app-label-field>
+      </div>
+    </div>
+  </div>
+  <button mat-raised-button (click)="onCompanyReview(company)">Review</button>
+  <mat-tab-group class="tabs">
+    <mat-tab label="Contests">
+      <mat-list>
+        <mat-list-item *ngFor="let contest of company.contests">
+          <h4 mat-line>
+            <div class="contest-list-item">
+              <span class="position">{{contest.position}}</span>
+              <span>{{contest.type}}</span>
+              <button mat-raised-button color="primary" (click)="onContestDetails(contest)">Details</button>
+            </div>
+          </h4>
+          <p mat-line>Open until {{contest.to | date}} </p>
+        </mat-list-item>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Reviews">
+      <mat-list>
+        <mat-list-item class="review-item" *ngFor="let review of company.reviews">
+          <div mat-line class="review-rating-container">
+              <mat-progress-spinner [color]="review.rating < 3 ? 'warn' : 'primary'" diameter="30" mode="determinate" [value]="review.rating * 20"></mat-progress-spinner>
+              <span class="review-rating">{{review.rating}}</span>
+          </div>
+          <p mat-line>{{review.comment}}</p>
+          <p mat-line>Posted at {{'12/03/2014' | date}} </p>
+        </mat-list-item>
+      </mat-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner [diameter]="60"></mat-spinner>
+</div>

@@ -1,0 +1,212 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="uploadFilesStep">
+    <form [formGroup]="uploadFilesStep" class="content-container">
+      <ng-template matStepLabel>Import JSON files</ng-template>
+      <div class="content upload-container">
+        <app-file-upload type="json" [options]="fileOptions" name="JobFairJSON file" (fileReady)="onJobFairJSONReady($event)"></app-file-upload>
+        <app-file-upload type="json" [options]="fileOptions" name="PackagesJSON file" (fileReady)="onPackagesJSONReady($event)"></app-file-upload>
+      </div>
+      <div class="step-controls">
+        <button mat-raised-button color="primary" matStepperNext [disabled]="uploadFilesStep.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="basicInfoStep">
+    <form [formGroup]="basicInfoStep" class="content-container">
+      <ng-template matStepLabel>Basic Info</ng-template>
+      <div class="content">
+        <div class="form__content--split">
+          <div class='form__content--split__side'>
+            <mat-form-field appearance="standard">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Place</mat-label>
+              <input matInput formControlName="place">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="pickerStartDate" formControlName="startDate">
+              <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+              <mat-datepicker #pickerStartDate></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate">
+              <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEndDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class='form__content--split__side'>
+            <mat-form-field appearance="standard">
+              <mat-label>Start Time</mat-label>
+              <input matInput [ngxTimepicker]="startTimePicker" formControlName="startTime">
+              <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>End Time</mat-label>
+              <input matInput [ngxTimepicker]="endTimePicker" formControlName="endTime">
+              <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field class="full-width">
+          <mat-chip-list #areaList>
+            <mat-chip *ngFor="let area of areaControls.controls;let i = index" [selectable]="true" [removable]="true"
+              (removed)="onRemoveArea(i)">
+              {{area.value}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="areaList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="onAddArea($event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+      <div class="step-controls">
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext [disabled]="basicInfoStep.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="advancedInfoStep">
+    <form [formGroup]="advancedInfoStep" class="content-container">
+      <ng-template matStepLabel>Advanced Info</ng-template>
+      <div class="content">
+        <app-file-upload type="image" [options]="imageOptions" name="JobFair Logo" (fileReady)="onJobFairLogoReady($event)"></app-file-upload>
+        <ul class="schedule-list" formArrayName="schedules">
+          <li *ngFor="let schedule of scheduleControls.controls;let i = index" [formGroupName]="i" class="full-width">
+            <mat-form-field appearance="standard">
+              <mat-label>Area</mat-label>
+              <mat-select formControlName="area">
+                <mat-option *ngFor="let area of areaControls.controls" [value]="area.value">
+                  {{area.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Type</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let type of jobFairScheduleTypes" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>From</mat-label>
+              <input matInput [ngxTimepicker]="scheduleFromTimePicker" formControlName="from" />
+              <ngx-material-timepicker #scheduleFromTimePicker></ngx-material-timepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>To</mat-label>
+              <input matInput [ngxTimepicker]="scheduleToTimePicker" formControlName="to" />
+              <ngx-material-timepicker #scheduleToTimePicker></ngx-material-timepicker>
+            </mat-form-field>
+          </li>
+        </ul>
+      </div>
+      <div class="step-controls">
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext [disabled]="advancedInfoStep.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="packageStep">
+    <form [formGroup]="packageStep" class="content-container">
+      <ng-template matStepLabel>Package information</ng-template>
+      <div class="content">
+        <h1>Packages Info</h1>
+        <ul formArrayName="packages">
+          <li *ngFor="let package of packageControls.controls;let i = index" [formGroupName]="i">
+            <div class="form__content--split">
+              <div class="form__content--split__side">
+                <mat-form-field appearance="standard">
+                  <mat-label>Title</mat-label>
+                  <input matInput formControlName="title" />
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Video Promotion</mat-label>
+                  <input matInput type="number" formControlName="videoPromotion" />
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Lessons count</mat-label>
+                  <input matInput type="number" formControlName="numOfLessons" />
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Workshops count</mat-label>
+                  <input matInput type="number" formControlName="numOfWorkshops" />
+                </mat-form-field>
+              </div>
+              <div class="form__content--split__side">
+                <mat-form-field appearance="standard">
+                  <mat-label>Presentations count</mat-label>
+                  <input matInput type="number" formControlName="numOfPresentations" />
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Total no. companies</mat-label>
+                  <input matInput type="number" formControlName="totalNumOfCompanies" />
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Price</mat-label>
+                  <input matInput formControlName="price" />
+                </mat-form-field>
+              </div>
+            </div>
+            <ul formArrayName="content">
+              <button mat-button (click)="onAddContentToPackage(i)">
+                <mat-icon>add</mat-icon>
+                Add
+              </button>
+              <li *ngFor="let cnt of package.get('content').controls;let j = index">
+                <button mat-button (click)="onRemoveContentFromPackage(i, j)">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <mat-form-field class="content-field" appearance="standard">
+                  <mat-label>Content</mat-label>
+                  <textarea matInput [formControlName]="j"></textarea>
+                </mat-form-field>
+              </li>
+            </ul>
+            <mat-divider></mat-divider>
+          </li>
+        </ul>
+        <h1>Services Info</h1>
+        <ul formArrayName="services">
+          <button mat-button (click)="onAddService()">
+            <mat-icon>add</mat-icon>
+            Add
+          </button>
+          <li class="service-item" *ngFor="let service of serviceControls.controls;let i = index" [formGroupName]="i">
+            <button class="remove-button" mat-button (click)="onRemoveService(i)">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <mat-form-field class="price-field" appearance="standard">
+              <mat-label>Price</mat-label>
+              <input matInput type="number" formControlName="price" />
+            </mat-form-field>
+            <mat-form-field class="description-field" appearance="standard">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+          </li>
+        </ul>
+      </div>
+      <div class="step-controls">
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext [disabled]="packageStep.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Finalize</ng-template>
+    You are now done.
+    <div class="step-controls">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

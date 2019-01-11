@@ -1,0 +1,189 @@
+<h1 mat-dialog-title>Biography Form</h1>
+<form mat-dialog-content [formGroup]="biographyForm" class="form-container">
+  <h1 mat-dialog-title>Personal Info</h1>
+  <mat-divider></mat-divider>
+  <div class='form__content--split'>
+    <div class='form__content--split__side'>
+      <mat-form-field appearance="standard">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Street Address</mat-label>
+        <input matInput formControlName="streetAddress">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Postal Code</mat-label>
+        <input matInput formControlName="postalCode">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+    </div>
+    <div class='form__content--split__side'>
+      <mat-form-field appearance="standard">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Phone Number</mat-label>
+        <input matInput type="tel" formControlName="phoneNumber">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Webiste</mat-label>
+        <input matInput type="url" formControlName="website">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Skype Name</mat-label>
+        <input matInput formControlName="skypeName">
+      </mat-form-field>
+    </div>
+  </div>
+  <h1 mat-dialog-title class="exp-title">
+    <span>Education</span>
+    <button mat-raised-button (click)="onAddExp('education')">Add</button>
+  </h1>
+  <mat-divider></mat-divider>
+  <ul formArrayName="educationExperiences">
+    <ng-container *ngFor="let exp of biographyForm.get('educationExperiences').controls; let i = index">
+      <li class="exp-item" [formGroupName]="i">
+        <div class='form__content--split'>
+          <div class='form__content--split__side'>
+            <mat-form-field appearance="standard">
+              <mat-label>Position</mat-label>
+              <input matInput formControlName="position">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Organisation Name</mat-label>
+              <input matInput formControlName="organisationName">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+            </mat-form-field>
+          </div>
+          <div class='form__content--split__side'>
+            <mat-form-field appearance="standard">
+              <mat-label>Description</mat-label>
+              <input matInput formControlName="description">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>From</mat-label>
+              <input matInput [matDatepicker]="pickerEduFrom" formControlName="from">
+              <mat-datepicker-toggle matSuffix [for]="pickerEduFrom"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEduFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>To</mat-label>
+              <input matInput [matDatepicker]="pickerEduTo" formControlName="to">
+              <mat-datepicker-toggle matSuffix [for]="pickerEduTo"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEduTo></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <button mat-raised-button (click)="onRemoveExp('education', i)">Remove</button>
+      </li>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </ul>
+  <h1 mat-dialog-title class="exp-title">
+    <span>Work</span>
+    <button mat-raised-button (click)="onAddExp('work')">Add</button>
+  </h1>
+  <mat-divider></mat-divider>
+  <ul formArrayName="workExperiences">
+    <ng-container *ngFor="let exp of biographyForm.get('workExperiences').controls; let i = index">
+      <li class="exp-item" [formGroupName]="i">
+        <div class='form__content--split'>
+          <div class='form__content--split__side'>
+            <mat-form-field appearance="standard">
+              <mat-label>Position</mat-label>
+              <input matInput formControlName="position">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Organisation Name</mat-label>
+              <input matInput formControlName="organisationName">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+            </mat-form-field>
+          </div>
+          <div class='form__content--split__side'>
+            <mat-form-field appearance="standard">
+              <mat-label>Description</mat-label>
+              <input matInput formControlName="description">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>From</mat-label>
+              <input matInput [matDatepicker]="pickerWorkFrom" formControlName="from">
+              <mat-datepicker-toggle matSuffix [for]="pickerWorkFrom"></mat-datepicker-toggle>
+              <mat-datepicker #pickerWorkFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+              <mat-label>To</mat-label>
+              <input matInput [matDatepicker]="pickerWorkTo" formControlName="to">
+              <mat-datepicker-toggle matSuffix [for]="pickerWorkTo"></mat-datepicker-toggle>
+              <mat-datepicker #pickerWorkTo></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <button mat-raised-button (click)="onRemoveExp('work', i)">Remove</button>
+      </li>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </ul>
+  <h1 mat-dialog-title>Spoken Languages</h1>
+  <mat-divider></mat-divider>
+  <mat-form-field class="full-width">
+    <mat-chip-list #langList>
+      <mat-chip *ngFor="let lang of spokenLanguages.controls;let i = index" [selectable]="true" [removable]="true"
+        (removed)="onRemoveLang(i)">
+        {{lang.value}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="langList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+        (matChipInputTokenEnd)="onAddLang($event)">
+    </mat-chip-list>
+  </mat-form-field>
+  <h1 mat-dialog-title>Skills</h1>
+  <mat-divider></mat-divider>
+  <mat-form-field class="full-width">
+    <mat-chip-list #skillList>
+      <mat-chip *ngFor="let skill of skills.controls;let i = index" [selectable]="true" [removable]="true" (removed)="onRemoveSkill(i)">
+        {{skill.value}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="skillList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+        (matChipInputTokenEnd)="onAddSkill($event)">
+    </mat-chip-list>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onClose()">Close</button>
+  <button mat-raised-button (click)="onSave()">
+    <div class="save-control">
+      <span>Save</span>
+      <ng-container *ngIf="loading">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </ng-container>
+    </div>
+  </button>
+</div>

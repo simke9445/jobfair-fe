@@ -1,0 +1,49 @@
+<div class="filter-controls">
+  <mat-accordion class="filter-container">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Advanced filtering
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form [formGroup]="filterForm">
+        <mat-form-field class="form-field" appearance="standard">
+          <mat-label>Position</mat-label>
+          <input matInput formControlName="position">
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="standard">
+          <mat-select placeholder="Choose a type" formControlName="type" multiple>
+            <mat-option *ngFor="let type of contestTypes" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <button mat-button (click)="fetchResults()">
+    <mat-icon>search</mat-icon>
+    Search
+  </button>
+  <button mat-button (click)="addContest()">
+    <mat-icon>add</mat-icon>
+    Add
+  </button>
+</div>
+
+
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div>
+<mat-card class="contest-card" *ngFor="let contest of contests">
+  <mat-card-content>
+    <h4 mat-line>
+      <div class="contest-list-item">
+        <span class="position">{{contest.position}}</span>
+        <span>{{contest.type}}</span>
+        <button mat-raised-button color="primary" (click)="onDetailsClick(contest)">Details</button>
+      </div>
+    </h4>
+    <p mat-line>Open until {{contest.to | date}} </p>
+  </mat-card-content>
+</mat-card>

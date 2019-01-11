@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Create Review</h1>
+<div mat-dialog-content>
+  <form [formGroup]="reviewForm">
+    <mat-form-field>
+      <mat-label>Comment</mat-label>
+      <textarea matInput formControlName="comment"></textarea>
+    </mat-form-field>
+    <div>
+      <div class="mat-typography">Rating</div>
+      <mat-slider color="primary" thumbLabel formControlName="rating" tickInterval="1" min="1" max="5"></mat-slider>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</div>

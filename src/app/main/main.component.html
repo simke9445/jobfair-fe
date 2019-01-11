@@ -1,0 +1,13 @@
+<mat-drawer-container [hasBackdrop]="false" class="main">
+  <mat-drawer #drawer [mode]="over" class="main__sidebar">
+    <app-navigation (toggleNavigation)="onToggleNavigation()"></app-navigation>
+  </mat-drawer>
+  <mat-drawer-content class="main__container">
+    <app-header class="main__header" (toggleNavigation)="onToggleNavigation()"></app-header>
+    <div class="main__content">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer class="main__footer"></app-footer>
+    <!-- <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button> -->
+  </mat-drawer-content>
+</mat-drawer-container>

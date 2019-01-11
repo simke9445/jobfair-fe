@@ -1,0 +1,66 @@
+:host {
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 5% 20%;
+}
+
+.details-container {
+  display: flex;
+}
+
+.details-side {
+  margin-left: 40px;
+}
+
+.details-title {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.label-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.label-container > app-label-field {
+  margin: 5px;
+  flex: 0 1 200px;
+}
+
+.spinner-container {
+  margin: auto;
+}
+
+.tabs {
+  margin-top: 20px;
+}
+
+.contest-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contest-list-item > .position {
+  width: 100px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+}
+
+.review-rating-container {
+  position: relative;
+}
+
+.review-rating {
+  position: absolute;
+  top: 5px;
+  font-size: 18px;
+  left: 10px;
+}

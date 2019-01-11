@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Contest Application Form</h1>
+<form mat-dialog-content [formGroup]="applicationForm" class="form-container">
+  <ng-container *ngIf="!student.biography">
+    <p class="mat-typography">To apply for contest you must first upload your biography</p>
+    <button mat-raised-button color="primary" (click)="onUploadBiography()">Upload Biography</button>
+  </ng-container>
+  <ng-container *ngIf="student.biography">
+    <mat-form-field appearance="standard" class="mat-form-field--no-underline">
+      <input matInput style="display: none">
+      <mat-checkbox color="primary" formControlName="includeBiography">Include biography</mat-checkbox>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Cover Letter</mat-label>
+      <textarea matInput formControlName="coverLetter"></textarea>
+    </mat-form-field>
+    <app-file-upload type="file" name="Cover Letter pdf" (fileReady)="onPdfReady($event)"></app-file-upload>
+  </ng-container>
+</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Close</button>
+  <button mat-button (click)="onSave()">
+    <div class="save-control">
+      <span>Save</span>
+      <ng-container *ngIf="loading">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </ng-container>
+    </div>
+  </button>
+</div>

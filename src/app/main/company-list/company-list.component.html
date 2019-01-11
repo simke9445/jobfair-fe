@@ -1,0 +1,65 @@
+<div class="filter-controls">
+  <mat-accordion class="filter-container">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Advanced filtering
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form [formGroup]="filterForm">
+
+        <mat-form-field class="form-field" appearance="standard">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="standard">
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city">
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="standard">
+          <mat-select placeholder="Choose an area" formControlName="bussinessArea" multiple>
+            <mat-option *ngFor="let area of bussinessAreas" [value]="area">
+              {{area}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </form>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+  <button mat-button (click)="fetchResults()">
+    <mat-icon>search</mat-icon>
+    Search
+  </button>
+</div>
+
+
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div>
+<mat-card class="company-card" *ngFor="let company of companies">
+  <mat-card-header>
+    <img mat-card-avatar src="{{company.logoImage}}" />
+    <mat-card-title>{{company.name}}</mat-card-title>
+    <mat-card-subtitle>{{company.bussinessArea}}</mat-card-subtitle>
+    <button class="details-button" mat-raised-button color="primary" (click)="onDetailsClick(company)">
+      Details
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="label-container">
+      <app-label-field [value]="company.city" label="City"></app-label-field>
+      <app-label-field [value]="company.address" label="Address"></app-label-field>
+      <app-label-field [value]="company.director" label="Director"></app-label-field>
+      <app-label-field [value]="company.pib" label="PIB"></app-label-field>
+      <app-label-field [value]="company.numberOfEmployees" label="Employee count"></app-label-field>
+      <app-label-field [value]="company.email" label="Email"></app-label-field>
+      <app-label-field [value]="company.website" label="Website"></app-label-field>
+      <app-label-field [value]="company.bussinessArea" label="Bussiness Area"></app-label-field>
+      <app-label-field [value]="company.address" label="Address"></app-label-field>
+    </div>
+  </mat-card-content>
+</mat-card>

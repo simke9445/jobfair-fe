@@ -1,0 +1,49 @@
+:host {
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 5% 20%;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-subheader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.details-subheader > span {
+  text-transform: capitalize;
+}
+
+.details-description {
+  margin: 20px 0;
+}
+
+.spinner-container {
+  margin: auto;
+}
+
+.divider {
+  margin: 40px 0;
+}
+
+.application-details {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.application-details-checkbox {
+  padding-right: 10px;
+}
+
+.application-list {
+  margin-top: 10px;
+}

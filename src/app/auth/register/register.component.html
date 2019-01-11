@@ -1,0 +1,183 @@
+<mat-horizontal-stepper class="stepper" #stepper>
+
+  <mat-step [stepControl]="registerForm">
+    <form class="form" [formGroup]="registerForm" (ngSubmit)="onNext(stepper)">
+      <h1 class="form__title">Register</h1>
+      <p class="form__description">Please fill out your account info</p>
+      <mat-form-field appearance="standard">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
+        <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+          <div *ngIf="username.errors.required">
+            Username required.
+          </div>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password">
+        <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+          <div *ngIf="password.errors">
+            <div *ngIf="password.errors.minlength">
+              Password has to have at least 8 characters
+            </div>
+            <div *ngIf="password.errors.maxlength">
+              Password has to have at most 12 characters
+            </div>
+            <div *ngIf="password.errors.hasMatchedLowerCaseLetters">
+              Password has to have at least 2 lowercase letters
+            </div>
+            <div *ngIf="password.errors.hasMatchedUpperCaseLetters">
+              Password has to have at least 1 uppercase letter
+            </div>
+            <div *ngIf="password.errors.hasMatchedNumericLetters">
+              Password has to have at least 1 numeric letter
+            </div>
+            <div *ngIf="password.errors.hasMatchedSpecialLetters">
+              Password has to have at least 1 special letter
+            </div>
+            <div *ngIf="password.errors.hasFirstLetterChar">
+              Password has to start with a letter
+            </div>
+            <div *ngIf="password.errors.hasNoTwoSameAdjacentLetters">
+              Password can't have two same adjacent letters
+            </div>
+          </div>
+        </mat-error>
+      </mat-form-field>
+      <mat-radio-group class="form__radio-group" formControlName="type" [value]="registerForm.type">
+        <mat-radio-button color="primary" value="student">Student</mat-radio-button>
+        <mat-radio-button color="primary" value="company">Company</mat-radio-button>
+      </mat-radio-group>
+      <div class="form__footer">
+        <button matStepperNext mat-raised-button color='primary' type="submit" [disabled]="!registerForm.valid">
+          <div class="form__submit">
+            <span>Next</span>
+            <ng-container *ngIf="loading">
+              <mat-spinner [diameter]="20"></mat-spinner>
+            </ng-container>
+          </div>
+        </button>
+        <span (click)="onLogin()">Login</span>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="companyForm">
+    <form class="form" [formGroup]="companyForm" (ngSubmit)="onSubmit(stepper)">
+      <h1 class="form__title">Company Info</h1>
+      <div class='form__content--split'>
+        <div class='form__content--split__side'>
+          <mat-form-field appearance="standard">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>director</mat-label>
+            <input matInput formControlName="director">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>PIB</mat-label>
+            <input matInput formControlName="pib">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Employee count</mat-label>
+            <input matInput type='number' formControlName="numberOfEmployees">
+          </mat-form-field>
+        </div>
+        <div class='form__content--split__side'>
+          <mat-form-field appearance="standard">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Website</mat-label>
+            <input matInput type="url" formControlName="website">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Bussiness Area</mat-label>
+            <mat-select formControlName="bussinessArea">
+              <mat-option>Choose an area</mat-option>
+              <mat-option *ngFor="let area of bussinessAreas" [value]="area">
+                {{area}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Specialization</mat-label>
+            <input matInput formControlName="specialization">
+          </mat-form-field>
+          <app-file-upload type="image" [options]="imageOptions" name="Logo Image" (fileReady)="onLogoReady($event)"></app-file-upload>
+        </div>
+      </div>
+      <div class="form__footer">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!companyForm.valid">
+          <div class="form__submit">
+            <span>Submit</span>
+            <ng-container *ngIf="loading">
+              <mat-spinner [diameter]="20"></mat-spinner>
+            </ng-container>
+          </div>
+        </button>
+        <span (click)="onLogin()" class="md-accent">Login</span>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="studentForm">
+    <form class="form" [formGroup]="studentForm" (ngSubmit)="onSubmit(stepper)">
+      <h1 class="form__title">Student Info</h1>
+      <div class='form__content--split'>
+        <div class='form__content--split__side'>
+          <mat-form-field appearance="standard">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Phone number</mat-label>
+            <input matInput type='tel' formControlName="phoneNumber">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Email</mat-label>
+            <input matInput type='email' formControlName="email">
+          </mat-form-field>
+        </div>
+        <div class="form__content--split__side">
+          <mat-form-field appearance="standard">
+            <mat-label>Year of study</mat-label>
+            <input matInput type='number' formControlName="yearOfStudy">
+          </mat-form-field>
+          <mat-form-field appearance="standard" class="mat-form-field--no-underline">
+            <input matInput style="display: none">
+            <mat-checkbox color="primary" formControlName="hasGraduated">Has Graduated</mat-checkbox>
+          </mat-form-field>
+          <app-file-upload type="image" [options]="imageOptions" name="Profile Image" (fileReady)="onProfileReady($event)"></app-file-upload>
+        </div>
+      </div>
+      <div class="form__footer">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!studentForm.valid">
+          <div class="form__submit">
+            <span>Submit</span>
+            <ng-container *ngIf="loading">
+              <mat-spinner [diameter]="20"></mat-spinner>
+            </ng-container>
+          </div>
+        </button>
+        <span (click)="onLogin()" class="md-accent">Login</span>
+      </div>
+    </form>
+  </mat-step>
+
+</mat-horizontal-stepper>

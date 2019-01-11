@@ -1,0 +1,82 @@
+.content-container {
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content {
+  flex: 1 1 auto;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 400px;
+}
+
+.step-controls {
+  display: flex;
+  min-width: 160px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.upload-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form__content--split {
+  display: flex;
+  width: 100%;
+}
+
+.form__content--split__side {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+  align-items: flex-start;
+}
+
+.schedule-list > li > .mat-form-field {
+  width: 140px;
+  margin-right: 40px;
+}
+
+ul, li {
+  list-style: none;
+  padding: 0;
+}
+
+.content-field {
+  width: 60%;
+}
+
+.mat-divider {
+  margin: 40px 0;
+}
+
+.service-item > .mat-form-field {
+  margin-right: 40px;
+}
+
+.service-item {
+  display: flex;
+}
+
+.service-item > .remove-button {
+  align-self: center;
+}
+
+.service-item > .price-field {
+  align-self: flex-end;
+}
+
+.service-item > .description-field {
+  flex: 1 1 auto;
+}
