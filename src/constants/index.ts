@@ -17,3 +17,9 @@ export const jobFairScheduleTypes = [
   'lesson',
   'presentation',
 ];
+
+export enum JobFairApplicationStatus {
+  Pending = 'PENDING',
+  Rejected = 'REJECTED',
+  Accepted = 'ACCEPTED',
+}

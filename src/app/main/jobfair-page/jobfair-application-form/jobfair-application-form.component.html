@@ -1,3 +1,65 @@
-<p>
-  jobfair-application-form works!
-</p>
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="applicationDetailsStep">
+    <form [formGroup]="applicationDetailsStep" class="content-container">
+      <ng-template matStepLabel>Application details</ng-template>
+      <div class="content">
+        <h2>Available Packages</h2>
+        <mat-radio-group class="package-names" formControlName="packageName">
+          <mat-radio-button color="primary" *ngFor="let name of packageNames" [value]="name">
+            {{name}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-divider></mat-divider>
+        <h2>Available Services</h2>
+        <ul formArrayName="services">
+          <li *ngFor="let service of servicesArray;let i = index">
+            <mat-checkbox color="primary" [formControl]="service">{{jobFair.services[i].description}}</mat-checkbox>
+          </li>
+        </ul>
+      </div>
+      <div class="step-controls">
+        <button mat-raised-button color="primary" matStepperNext [disabled]="applicationDetailsStep.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Finalize</ng-template>
+    <div class="content-container">
+      <div class="content">
+        <h1>Total Price</h1>
+        <div>{{formPayloadHydrated.totalPrice}}</div>
+        <mat-divider></mat-divider>
+        <h2>Package Info</h2>
+        <div class="label-container">
+          <app-label-field [value]="formPayloadHydrated.package.title" label="Title"></app-label-field>
+          <app-label-field [value]="formPayloadHydrated.package.videoPromotion" label="Video Promotion"></app-label-field>
+          <app-label-field [value]="formPayloadHydrated.package.numOfLessons" label="Num of lessons"></app-label-field>
+          <app-label-field [value]="formPayloadHydrated.package.numOfWorkshops" label="Num of workshops"></app-label-field>
+          <app-label-field [value]="formPayloadHydrated.package.numOfPresentations" label="Num of presentations"></app-label-field>
+          <app-label-field [value]="formPayloadHydrated.package.price" label="Price"></app-label-field>
+        </div>
+        <ng-container *ngIf="formPayloadHydrated.services && formPayloadHydrated.services.length > 0">
+          <mat-divider></mat-divider>
+          <h2>Additional Services</h2>
+          <ul>
+            <li class="label-container" *ngFor="let service of formPayloadHydrated.services">
+              <app-label-field [value]="service.price" label="Price"></app-label-field>
+              <app-label-field [value]="service.description" label="Description"></app-label-field>
+            </li>
+          </ul>
+        </ng-container>
+      </div>
+      <div class="step-controls step-controls--wide">
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button (click)="onSubmit()">
+          <div class="form__submit">
+            <span>Submit</span>
+            <ng-container *ngIf="loading">
+              <mat-spinner [diameter]="20"></mat-spinner>
+            </ng-container>
+          </div>
+        </button>
+      </div>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

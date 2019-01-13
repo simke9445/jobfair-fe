@@ -1,0 +1,67 @@
+.content-container {
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content {
+  flex: 1 1 auto;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 400px;
+}
+
+.step-controls {
+  display: flex;
+  min-width: 160px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.step-controls--wide {
+  width: 200px;
+}
+
+.form__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+}
+
+.form__submit > mat-spinner {
+  margin-left: 20px;
+}
+
+.package-names {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.package-names > * {
+  margin: 10px 0;
+}
+
+ul, li {
+  list-style: none;
+  padding: 0;
+}
+
+.label-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.label-container > app-label-field {
+  margin: 5px;
+  flex: 0 1 200px;
+}
+
+.mat-divider {
+  margin: 20px 0;
+}

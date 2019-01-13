@@ -6,6 +6,7 @@ import {
   addDays,
   format,
 } from 'date-fns';
+import { JobFairApplicationStatus } from 'src/constants';
 
 export interface JobFairJSON {
   Fairs: Array<{
@@ -25,28 +26,6 @@ export interface JobFairJSON {
   }>;
 }
 
-export interface JobFair {
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  logoImage?: string;
-  images?: string[];
-  startTime: string;
-  endTime: string;
-  place: string;
-  description: string;
-  areas: string[];
-  schedules: JobFairSchedule[];
-}
-
-export interface JobFairSchedule {
-  from: string;
-  to: string;
-  type: string;
-  area: string;
-  application: any;
-}
-
 export interface JobFairPackageJSON {
   Packages: Array<{
     Title: string,
@@ -64,7 +43,46 @@ export interface JobFairPackageJSON {
   }>;
 }
 
+export interface JobFairApplication {
+  _id?: string;
+  company?: string,
+  fair?: string,
+  package: string,
+  services?: string[],
+  schedule?: JobFairSchedule,
+  status: JobFairApplicationStatus,
+  comment: string,
+}
+
+export interface JobFair {
+  _id?: string;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  logoImage?: string;
+  images?: string[];
+  startTime: string;
+  endTime: string;
+  place: string;
+  description: string;
+  areas: string[];
+  schedules: JobFairSchedule[];
+  applications?: JobFairApplication[];
+  services?: JobFairService[];
+  packages?: JobFairPackage[];
+}
+
+export interface JobFairSchedule {
+  _id?: string;
+  from: string;
+  to: string;
+  type: string;
+  area: string;
+  application?: JobFairApplication;
+}
+
 export interface JobFairPackage {
+  _id?: string;
   title: string;
   videoPromotion: number;
   numOfLessons: number;
@@ -76,6 +94,7 @@ export interface JobFairPackage {
 }
 
 export interface JobFairService {
+  _id?: string;
   price: number;
   description: string;
 }

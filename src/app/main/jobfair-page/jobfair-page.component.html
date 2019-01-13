@@ -1,1 +1,9 @@
-<app-jobfair-creation-form></app-jobfair-creation-form>
+<ng-container *ngIf="!loading">
+  <app-jobfair-creation-form *ngIf="!activeFair && role === 'admin'"></app-jobfair-creation-form>
+  <app-jobfair-application-list *ngIf="activeFair && role === 'admin'"></app-jobfair-application-list>
+  <app-jobfair-application-form *ngIf="activeFair && role === 'company' && !application" [jobFair]="activeFair"></app-jobfair-application-form>
+  <app-jobfair-application-details *ngIf="activeFair && role === 'company' && application" [application]="application" (applicationSubmit)="onApplicationSubmit()"></app-jobfair-application-details>
+</ng-container>
+<ng-container *ngIf="loading">
+  <mat-spinner [diameter]="50"></mat-spinner>
+</ng-container>

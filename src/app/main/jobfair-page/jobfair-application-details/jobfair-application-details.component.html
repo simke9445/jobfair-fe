@@ -1,3 +1,36 @@
-<p>
-  jobfair-application-details works!
-</p>
+<mat-card>
+  <mat-card-content>
+    <h1>Application Overview</h1>
+    <app-label-field class="label-field" [value]="application.status" label="Status"></app-label-field>
+    <app-label-field class="label-field" [value]="application.comment" label="Comment"></app-label-field>
+    <ng-container *ngIf="application.status === JobFairApplicationStatus.Accepted">
+      <h2>Schedule Info</h2>
+      <div class="label-container">
+        <app-label-field class="label-field" [value]="application.schedule.from" label="From"></app-label-field>
+        <app-label-field class="label-field" [value]="application.schedule.to" label="To"></app-label-field>
+        <app-label-field class="label-field" [value]="application.schedule.area" label="Area"></app-label-field>
+        <app-label-field class="label-field" [value]="application.schedule.type" label="Type"></app-label-field>
+      </div>
+    </ng-container>
+    <h2>Package Info</h2>
+    <div class="label-container">
+      <app-label-field [value]="application.package.title" label="Title"></app-label-field>
+      <app-label-field [value]="application.package.videoPromotion" label="Video Promotion"></app-label-field>
+      <app-label-field [value]="application.package.numOfLessons" label="Num of lessons"></app-label-field>
+      <app-label-field [value]="application.package.numOfWorkshops" label="Num of workshops"></app-label-field>
+      <app-label-field [value]="application.package.numOfPresentations" label="Num of presentations"></app-label-field>
+      <app-label-field [value]="application.package.price" label="Price"></app-label-field>
+    </div>
+    <ul>
+      <li *ngFor="let content of application.package.content">{{content}}</li>
+    </ul>
+    <ng-container *ngIf="application.services && application.services.length > 0">
+      <h2>Additional Services</h2>
+      <ul>
+        <li class="label-container" *ngFor="let service of application.services">
+          <app-label-field [value]="service.price" label="Price"></app-label-field>
+          <app-label-field [value]="service.description" label="Description"></app-label-field>
+        </li>
+      </ul>
+    </ng-container>
+  </mat-card-content>
