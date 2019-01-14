@@ -1,3 +1,71 @@
-<div>
-  <div>Interval List</div>
+<form [formGroup]="intervalsForm" class="intervals-container">
+  <h1>Submission intervals</h1>
+  <div formGroupName="biographyInterval">
+    <h2>Student Biography</h2>
+    <mat-form-field appearance="standard">
+      <mat-label>From</mat-label>
+      <input matInput readonly [ngxTimepicker]="fromStudentIntervalTimePicker" [format]="24" formControlName="from">
+      <ngx-material-timepicker #fromStudentIntervalTimePicker></ngx-material-timepicker>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>To</mat-label>
+      <input matInput readonly [ngxTimepicker]="toStudentIntervalTimePicker" [format]="24" formControlName="to">
+      <ngx-material-timepicker #toStudentIntervalTimePicker></ngx-material-timepicker>
+    </mat-form-field>
+  </div>
+  <div formGroupName="applicationInterval">
+    <h2>Company Application</h2>
+    <mat-form-field appearance="standard">
+      <mat-label>From</mat-label>
+      <input matInput readonly [ngxTimepicker]="fromCompanyIntervalTimePicker" [format]="24" formControlName="from">
+      <ngx-material-timepicker #fromCompanyIntervalTimePicker></ngx-material-timepicker>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>To</mat-label>
+      <input matInput readonly [ngxTimepicker]="toCompanyIntervalTimePicker" [format]="24" formControlName="to">
+      <ngx-material-timepicker #toCompanyIntervalTimePicker></ngx-material-timepicker>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button color="primary" (click)="onSaveInterval()" [disabled]="intervalsForm.invalid">Update Intervals</button>
+</form>
+
+<div class="card-container">
+  <mat-card *ngFor="let application of applications">
+    <mat-card-content>
+      <div class="card-header">
+        <h1 class="card-header__title">{{application.company.name}}</h1>
+        <div class="card-header__controls">
+          <ng-container *ngIf="application.status === applicationStatus.Pending">
+            <button mat-raised-button (click)="onStatusUpdate(application, 'reject')">Reject</button>
+            <button mat-raised-button color="primary" (click)="onStatusUpdate(application, 'approve')">Approve</button>
+          </ng-container>
+          <ng-container *ngIf="application.status === applicationStatus.Accepted">
+            <button mat-raised-button color="primary" (click)="onStatusUpdate(application, 'update')">Update</button>
+          </ng-container>
+        </div>
+      </div>
+      <div class="label-container">
+        <app-label-field [value]="application.status" label="Status"></app-label-field>
+        <ng-container *ngIf="application.status === applicationStatus.Rejected">
+          <app-label-field [value]="application.comment" label="Comment"></app-label-field>
+        </ng-container>
+        <app-label-field [value]="application.package.title" label="Package"></app-label-field>
+      </div>
+      <ng-container *ngIf="application.status === applicationStatus.Accepted">
+        <mat-divider></mat-divider>
+        <div class="label-container">
+          <app-label-field [value]="application.schedule.from" label="From"></app-label-field>
+          <app-label-field [value]="application.schedule.to" label="To"></app-label-field>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="application.services && application.services.length > 0">
+        <mat-divider></mat-divider>
+        <ul>
+          <li *ngFor="let service of application.services">
+            <app-label-field [value]="service.description" label="Service"></app-label-field>
+          </li>
+        </ul>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -4,14 +4,20 @@
     <mat-icon>donut_large</mat-icon>
     Companies
   </button>
-  <button mat-button (click)="onNavigate('contests')">
-    <mat-icon>grade</mat-icon>
-    Contests
-  </button>
-  <button mat-button (click)="onNavigate('jobFair')">
-    <mat-icon>event</mat-icon>
-    Job Fair
-  </button>
+  <ng-container *ngIf="role">
+    <button mat-button (click)="onNavigate('contests')">
+      <mat-icon>grade</mat-icon>
+      Contests
+    </button>
+    <button mat-button (click)="onNavigate('myContests')">
+      <mat-icon>grade</mat-icon>
+      My Contests
+    </button>
+    <button mat-button (click)="onNavigate('jobFair')">
+      <mat-icon>event</mat-icon>
+      Job Fair
+    </button>
+  </ng-container>
 </div>
 <button mat-icon-button (click)="onNavigationClick()" class="navigation">
   <mat-icon class="icon">arrow_back</mat-icon>

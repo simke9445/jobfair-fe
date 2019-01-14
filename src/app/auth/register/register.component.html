@@ -25,7 +25,7 @@
               Password has to have at most 12 characters
             </div>
             <div *ngIf="password.errors.hasMatchedLowerCaseLetters">
-              Password has to have at least 2 lowercase letters
+              Password has to have at least 3 lowercase letters
             </div>
             <div *ngIf="password.errors.hasMatchedUpperCaseLetters">
               Password has to have at least 1 uppercase letter
@@ -58,7 +58,10 @@
             </ng-container>
           </div>
         </button>
-        <span (click)="onLogin()">Login</span>
+        <div>
+          <a mat-button routerLink="/auth/login">Login</a>
+          <a mat-button routerLink="/main">Preview only</a>
+        </div>
       </div>
     </form>
   </mat-step>
@@ -81,7 +84,7 @@
             <input matInput formControlName="address">
           </mat-form-field>
           <mat-form-field appearance="standard">
-            <mat-label>director</mat-label>
+            <mat-label>Director</mat-label>
             <input matInput formControlName="director">
           </mat-form-field>
           <mat-form-field appearance="standard">
@@ -127,7 +130,10 @@
             </ng-container>
           </div>
         </button>
-        <span (click)="onLogin()" class="md-accent">Login</span>
+        <div>
+          <a mat-button routerLink="/auth/login">Login</a>
+          <a mat-button routerLink="/main">Preview only</a>
+        </div>
       </div>
     </form>
   </mat-step>
@@ -175,7 +181,10 @@
             </ng-container>
           </div>
         </button>
-        <span (click)="onLogin()" class="md-accent">Login</span>
+        <div>
+          <a mat-button routerLink="/auth/login">Login</a>
+          <a mat-button routerLink="/main">Preview only</a>
+        </div>
       </div>
     </form>
   </mat-step>

@@ -18,6 +18,12 @@ export const jobFairScheduleTypes = [
   'presentation',
 ];
 
+export enum UserRole {
+  Admin = 'admin',
+  Company = 'company',
+  Student = 'student',
+}
+
 export enum JobFairApplicationStatus {
   Pending = 'PENDING',
   Rejected = 'REJECTED',

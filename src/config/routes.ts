@@ -10,6 +10,7 @@ import { CompanyDetailsComponent } from 'src/app/main/company-details/company-de
 import { ContestListComponent } from 'src/app/main/contest-list/contest-list.component';
 import { ContestDetailsComponent } from 'src/app/main/contest-details/contest-details.component';
 import { JobfairPageComponent } from 'src/app/main/jobfair-page/jobfair-page.component';
+import { ChangePasswordComponent } from 'src/app/auth/change-password/change-password.component';
 
 export const appRoutes: Routes = [
   {
@@ -18,6 +19,7 @@ export const appRoutes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      { path: 'change-password', component: ChangePasswordComponent },
       { path: '', pathMatch: 'full', redirectTo: 'login' },
     ],
   },

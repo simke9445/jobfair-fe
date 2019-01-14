@@ -41,12 +41,12 @@
           <div class='form__content--split__side'>
             <mat-form-field appearance="standard">
               <mat-label>Start Time</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="startTimePicker" formControlName="startTime">
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="startTimePicker" [format]="24" formControlName="startTime">
               <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>End Time</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" formControlName="endTime">
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" [format]="24" formControlName="endTime">
               <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
@@ -98,12 +98,12 @@
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>From</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleFromTimePicker" formControlName="from" />
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleFromTimePicker" [format]="24" formControlName="from" />
               <ngx-material-timepicker #scheduleFromTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>To</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleToTimePicker" formControlName="to" />
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleToTimePicker" [format]="24" formControlName="to" />
               <ngx-material-timepicker #scheduleToTimePicker></ngx-material-timepicker>
             </mat-form-field>
           </li>

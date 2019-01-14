@@ -13,4 +13,5 @@ export interface Company {
   bussinessArea: string;
   logoImage: string;
   contests: Contest[];
+  reviewAllowed: boolean;
 }

@@ -12,9 +12,10 @@ export class ContestService {
     private httpClient: HttpClient,
   ) { }
 
-  getContests(filter: any) {
+  getContests(filter: any, status) {
     const params = new HttpParams()
-      .set('filter', JSON.stringify(filter));
+      .set('filter', JSON.stringify(filter))
+      .set('status', status);
 
     return this.httpClient.get<any[]>(`${this.url}/contests`, {
       params

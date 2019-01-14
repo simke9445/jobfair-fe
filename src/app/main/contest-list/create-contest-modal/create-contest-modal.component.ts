@@ -32,20 +32,19 @@ export class CreateContestModalComponent implements OnInit {
     });
   }
 
-  onClose() {
-    this.dialogRef.close();
+  onClose(payload) {
+    this.dialogRef.close(payload);
   }
 
   async onSave() {
     this.loading = true;
 
     try {
-      // await this.contestService.saveContest(
-      //   this.contestForm.value,
-      // );
-      // this.loading = false;
-      // this.onClose();
-      console.log(this.contestForm.value);
+      const contest = await this.contestService.saveContest(
+        this.contestForm.value,
+      );
+      this.loading = false;
+      this.onClose(contest);
     } catch (err) {
       this.loading = false;
     }

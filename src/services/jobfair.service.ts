@@ -34,8 +34,18 @@ export class JobfairService {
       .toPromise();
   }
 
+  updateFair(payload, id) {
+    return this.httpClient.patch(`${this.url}/jobfairs/${id}`, payload)
+      .toPromise();
+  }
+
   saveFairApplication(payload, fairId) {
     return this.httpClient.post(`${this.url}/jobfairs/${fairId}/applications`, payload)
+      .toPromise();
+  }
+
+  updateFairApplication(payload, fairId, id) {
+    return this.httpClient.patch(`${this.url}/jobfairs/${fairId}/applications/${id}`, payload)
       .toPromise();
   }
 }

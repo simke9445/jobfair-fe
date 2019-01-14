@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStorageService } from 'src/services/localStorage.service';
 
 @Component({
   selector: 'app-navigation',
@@ -12,12 +13,19 @@ export class NavigationComponent implements OnInit {
   routes = {
     contests: '/main/contests',
     companies: '/main/companies',
+    myContests: '/main/my-contests',
     jobFair: '/main/jobfair',
   }
 
-  constructor(private router: Router) { }
+  role = null;
+
+  constructor(
+    private router: Router,
+    private localStorageService: LocalStorageService,
+  ) { }
 
   ngOnInit() {
+    this.role = this.localStorageService.get('role');
   }
 
   onNavigationClick() {

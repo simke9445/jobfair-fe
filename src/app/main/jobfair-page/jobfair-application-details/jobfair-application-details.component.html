@@ -2,7 +2,9 @@
   <mat-card-content>
     <h1>Application Overview</h1>
     <app-label-field class="label-field" [value]="application.status" label="Status"></app-label-field>
-    <app-label-field class="label-field" [value]="application.comment" label="Comment"></app-label-field>
+    <ng-container *ngIf="application.status === JobFairApplicationStatus.Rejected">
+      <app-label-field class="label-field" [value]="application.comment" label="Comment"></app-label-field>
+    </ng-container>
     <ng-container *ngIf="application.status === JobFairApplicationStatus.Accepted">
       <h2>Schedule Info</h2>
       <div class="label-container">

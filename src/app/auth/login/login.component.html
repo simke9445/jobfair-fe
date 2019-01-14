@@ -1,33 +1,37 @@
- <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h1 class="form__title">Login</h1>
-    <p class="form__description">Please enter your credentials</p>
-    <mat-form-field appearance="standard">
-      <mat-label>Username</mat-label>
-      <input matInput formControlName="username">
-      <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
-        <div *ngIf="username.errors.required">
-          Username required.
-        </div>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="standard">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password">
-      <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
-        <div *ngIf="password.errors">
-          <div *ngIf="password.errors.required">
-            Password required.
-          </div>
-        </div>
-      </mat-error>
-    </mat-form-field>
-    <button mat-button type="submit" [disabled]="!loginForm.valid">
-      <div class="form__submit">
-        <span>Submit</span>
-        <ng-container *ngIf="loading">
-          <mat-spinner [diameter]="20"></mat-spinner>
-        </ng-container>
+<form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <h1 class="form__title">Login</h1>
+  <p class="form__description">Please enter your credentials</p>
+  <mat-form-field appearance="standard">
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username">
+    <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+      <div *ngIf="username.errors.required">
+        Username required.
       </div>
-    </button>
-    <span (click)="onRegister()" class="md-accent">Register</span>
-<form>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password">
+    <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div *ngIf="password.errors">
+        <div *ngIf="password.errors.required">
+          Password required.
+        </div>
+      </div>
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+    <div class="form__submit">
+      <span>Submit</span>
+      <ng-container *ngIf="loading">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </ng-container>
+    </div>
+  </button>
+  <div class="links-container">
+    <a mat-button routerLink="/main">Preview only</a>
+    <a mat-button routerLink="/auth/register">Register</a>
+    <a mat-button routerLink="/auth/change-password">Change Password</a>
+  </div>
+</form>

@@ -68,6 +68,8 @@ import { JobfairCreationFormComponent } from './main/jobfair-page/jobfair-creati
 import { JobfairApplicationFormComponent } from './main/jobfair-page/jobfair-application-form/jobfair-application-form.component';
 import { JobfairApplicationListComponent } from './main/jobfair-page/jobfair-application-list/jobfair-application-list.component';
 import { JobfairApplicationDetailsComponent } from './main/jobfair-page/jobfair-application-details/jobfair-application-details.component';
+import { ApplicationStatusModalComponent } from './main/jobfair-page/jobfair-application-list/application-status-modal/application-status-modal.component';
+import { ChangePasswordComponent } from './auth/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import { JobfairApplicationDetailsComponent } from './main/jobfair-page/jobfair-
     JobfairApplicationFormComponent,
     JobfairApplicationListComponent,
     JobfairApplicationDetailsComponent,
+    ApplicationStatusModalComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -165,6 +169,7 @@ import { JobfairApplicationDetailsComponent } from './main/jobfair-page/jobfair-
     ContestApplicationModalComponent,
     BiographyModalComponent,
     CreateContestModalComponent,
+    ApplicationStatusModalComponent,
   ],
 })
 export class AppModule { }

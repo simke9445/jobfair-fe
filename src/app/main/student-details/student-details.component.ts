@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { StudentService } from 'src/services/student.service';
 
 import { BiographyModalComponent } from './biography-modal/biography-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-student-details',
@@ -20,6 +21,7 @@ export class StudentDetailsComponent implements OnInit {
     private studentService: StudentService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private toastrService: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class StudentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(({ shouldRefresh }) => {
       if (shouldRefresh) {
         this.fetchData();
+        this.toastrService.success('Biography uploaded successfully!');
       }
     });
   }

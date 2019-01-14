@@ -9,7 +9,6 @@ import { JobFair, JobFairApplication } from 'src/models/jobfair';
   styleUrls: ['./jobfair-page.component.css']
 })
 export class JobfairPageComponent implements OnInit {
-  // TODO: add company jobfair application form
   // TODO: add biography upload/company application intervals (set/unset - simple form)
   // TOOD: add application list for admin to approve/disapprove
   // - if approved, pop up a modal for entering the time slot (out of remaining available)
@@ -31,6 +30,7 @@ export class JobfairPageComponent implements OnInit {
 
     try {
       this.activeFair = await this.jobFairService.getActiveFair();
+      console.log(this.activeFair);
 
       // if (this.role === 'company') {
       //   // for company we return the company application at first spot, or if not applied

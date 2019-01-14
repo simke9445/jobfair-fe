@@ -6,6 +6,9 @@
 .side-image {
   max-width: 50%;
   flex: 1 1 auto;
+  max-height: 100vh;
+  object-fit: contain;
+  background: linear-gradient(to bottom, #66ffff 0%, #cc99ff 100%);
 }
 
 .side-routes {

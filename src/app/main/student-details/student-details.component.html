@@ -12,10 +12,11 @@
     </div>
   </div>
   <mat-divider class="divider"></mat-divider>
-  <button mat-raised-button (click)="onBiographyUpdate(student)">Update Biography</button>
+  <button *ngIf="student.biographyUpdateAllowed || true" mat-raised-button (click)="onBiographyUpdate(student)">Update Biography</button>
   <div class="biography-container">
     <h1>Biography</h1>
-    <ul>
+    <p *ngIf="!student.biography">No biography uploaded yet.</p>
+    <ul *ngIf="student.biography">
       <li>
         <h2>Personal Info</h2>
         <div class="label-container">

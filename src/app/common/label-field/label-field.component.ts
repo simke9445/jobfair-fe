@@ -6,8 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./label-field.component.css']
 })
 export class LabelFieldComponent implements OnInit {
-  @Input('value') value: string;
-  @Input('label') label: string;
+  @Input() value: string;
+  @Input() label: string;
 
   constructor() { }
 

@@ -16,10 +16,13 @@
       </div>
     </div>
   </div>
-  <button mat-raised-button (click)="onCompanyReview(company)">Review</button>
+  <button *ngIf="company.allowReview" mat-raised-button (click)="onCompanyReview(company)">Review</button>
   <mat-tab-group class="tabs">
     <mat-tab label="Contests">
-      <mat-list>
+      <ng-container *ngIf="company.contests.length === 0">
+        <p>There are no contests currently.</p>
+      </ng-container>
+      <mat-list *ngIf="company.contests.length > 0">
         <mat-list-item *ngFor="let contest of company.contests">
           <h4 mat-line>
             <div class="contest-list-item">
@@ -33,11 +36,15 @@
       </mat-list>
     </mat-tab>
     <mat-tab label="Reviews">
-      <mat-list>
+      <ng-container *ngIf="company.reviews.length === 0">
+        <p>There are no reviews currently.</p>
+      </ng-container>
+      <mat-list *ngIf="company.reviews.length > 0">
         <mat-list-item class="review-item" *ngFor="let review of company.reviews">
           <div mat-line class="review-rating-container">
-              <mat-progress-spinner [color]="review.rating < 3 ? 'warn' : 'primary'" diameter="30" mode="determinate" [value]="review.rating * 20"></mat-progress-spinner>
-              <span class="review-rating">{{review.rating}}</span>
+            <mat-progress-spinner [color]="review.rating < 3 ? 'warn' : 'primary'" diameter="30" mode="determinate"
+              [value]="review.rating * 20"></mat-progress-spinner>
+            <span class="review-rating">{{review.rating}}</span>
           </div>
           <p mat-line>{{review.comment}}</p>
           <p mat-line>Posted at {{'12/03/2014' | date}} </p>

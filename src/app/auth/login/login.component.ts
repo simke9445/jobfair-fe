@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { AuthService } from 'src/services/auth.service';
 
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -29,16 +27,12 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     try {
-      const user = await this.authService.login(this.loginForm.value);
+      await this.authService.login(this.loginForm.value);
       
       this.loading = false;
     } catch (err) {
       this.loading = false;
     }
-  }
-
-  onRegister() {
-    this.router.navigate(['/auth/register']);
   }
 
   get username() {

@@ -54,6 +54,11 @@ export interface JobFairApplication {
   comment: string,
 }
 
+export interface JobFairInterval {
+  from: string;
+  to: string;
+}
+
 export interface JobFair {
   _id?: string;
   name: string;
@@ -70,6 +75,8 @@ export interface JobFair {
   applications?: JobFairApplication[];
   services?: JobFairService[];
   packages?: JobFairPackage[];
+  biographyInterval?: JobFairInterval;
+  applicationInterval?: JobFairInterval;
 }
 
 export interface JobFairSchedule {

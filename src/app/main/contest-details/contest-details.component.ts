@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material';
 import { ContestService } from 'src/services/contest.service';
 
 import { ContestApplicationModalComponent } from './contest-application-modal/contest-application-modal.component';
+import { LocalStorageService } from 'src/services/localStorage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contest-details',
@@ -12,16 +14,18 @@ import { ContestApplicationModalComponent } from './contest-application-modal/co
   styleUrls: ['./contest-details.component.css']
 })
 export class ContestDetailsComponent implements OnInit {
-
-  contest = {};
+  contest: any = {};
   loading = false;
   id = null;
+  role = null;
+  userId = null;
 
   constructor(
     private contestService: ContestService,
     private route: ActivatedRoute,
-    private router: Router,
     private dialog: MatDialog,
+    private localStorageService: LocalStorageService,
+    private toastrService: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -29,6 +33,12 @@ export class ContestDetailsComponent implements OnInit {
       this.id = map.get('id');
       this.fetchData();
     });
+    this.role = this.localStorageService.get('role');
+    this.userId = this.localStorageService.get('id');
+  }
+
+  get isCompanyContest() {
+    return this.userId === this.contest.company;
   }
 
   onContestApply(contest) {
@@ -37,8 +47,11 @@ export class ContestDetailsComponent implements OnInit {
       data: { contest }
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((application) => {
+      if (application) {
+        this.fetchData();
+        this.toastrService.success('Application submitted succesfully!');
+      }
     });
   }
 
@@ -51,7 +64,6 @@ export class ContestDetailsComponent implements OnInit {
 
     try {
       this.contest = await this.contestService.getContestById(this.id);
-
       console.log(this.contest);
       this.loading = false;
     } catch (err) {

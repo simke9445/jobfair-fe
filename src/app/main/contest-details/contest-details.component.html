@@ -8,18 +8,22 @@
     <div class="details-description">{{contest.description}}</div>
     <h4>{{contest.from | date}}</h4>
   </div>
-  <button mat-raised-button (click)="onContestApply(contest)">Apply</button>
+  <button *ngIf="contest.isOngoing && role === 'student'" mat-raised-button (click)="onContestApply(contest)">Apply</button>
   <mat-divider class="divider"></mat-divider>
-  <button mat-raised-button (click)="onApplicationApprove(contest)">Approve applications</button>
+  <button *ngIf="!contest.isOngoing && isCompanyContest" mat-raised-button (click)="onApplicationApprove(contest)">Approve
+    applications</button>
   <mat-list class="application-list">
     <h1>Applications</h1>
+    <p *ngIf="contest.applications.length === 0">No Applications submitted yet.</p>
     <mat-list-item *ngFor="let application of contest.applications">
       <h4 mat-line class="application-details">
-        <span>{{application.student.firstName}} {{application.student.firstName}}</span>
+        <span>{{application.student.firstName}} {{application.student.lastName}}</span>
         <a mat-raised-button color="primary" routerLink="/main/students/{{application.student._id}}">Details</a>
       </h4>
       <div mat-line>
-        <mat-checkbox color="primary" class="application-details-checkbox"></mat-checkbox>
+        <ng-container *ngIf="!contest.isOngoing && isCompanyContest">
+          <mat-checkbox color="primary" class="application-details-checkbox"></mat-checkbox>
+        </ng-container>
         <span>{{application.status}}</span>
       </div>
     </mat-list-item>

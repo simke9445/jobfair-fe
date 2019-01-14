@@ -16,7 +16,7 @@ import { CreateContestModalComponent } from './create-contest-modal/create-conte
 export class ContestListComponent implements OnInit {
   filterForm = new FormGroup({
     position: new FormControl(''),
-    type: new FormControl(''),
+    type: new FormControl([]),
   });
 
   contestTypes = contestTypes;
@@ -43,8 +43,10 @@ export class ContestListComponent implements OnInit {
       data: {},
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((contest) => {
+      if (contest) {
+        this.fetchResults();
+      }
     });
   }
 
@@ -52,7 +54,7 @@ export class ContestListComponent implements OnInit {
     this.loading = true;
 
     try {
-      this.contests = await this.companyService.getContests(this.filterForm.value);
+      this.contests = await this.companyService.getContests(this.filterForm.value, 'active');
       this.loading = false;
     } catch (err) {
       this.loading = false;

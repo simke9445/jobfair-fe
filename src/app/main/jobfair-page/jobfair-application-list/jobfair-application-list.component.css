@@ -1,0 +1,62 @@
+:host {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.intervals-container >>> mat-form-field {
+  width: 100px;
+  margin-right: 40px;
+}
+
+.card-container {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.card-container > mat-card {
+  margin: 20px 0;
+  width: 600px;
+}
+
+.label-field {
+  display: block;
+  margin: 10px 0;
+}
+
+ul, li {
+  padding: 0;
+  list-style: none;
+}
+
+.label-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.label-container > app-label-field {
+  margin: 5px;
+  flex: 0 1 200px;
+}
+
+.mat-divider {
+  margin: 20px 0;
+  position: relative !important;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-header__title {
+  margin: 0;
+}
+
+.card-header__controls > button {
+  margin: 0 5px;
+}

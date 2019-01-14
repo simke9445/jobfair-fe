@@ -7,7 +7,8 @@
     <mat-icon class="icon">more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>Profile</button>
-    <button mat-menu-item>Logout</button>
+    <a *ngIf="role === UserRole.Student" routerLink="/main/students/{{id}}" mat-menu-item>Profile</a>
+    <a *ngIf="role === UserRole.Company" routerLink="/main/companies/{{id}}" mat-menu-item>Profile</a>
+    <button mat-menu-item (click)="onLogout()">Logout</button>
   </mat-menu>
 </div>

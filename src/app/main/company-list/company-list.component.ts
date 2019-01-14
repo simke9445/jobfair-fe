@@ -16,7 +16,7 @@ export class CompanyListComponent implements OnInit {
   filterForm = new FormGroup({
     name: new FormControl(''),
     city: new FormControl(''),
-    bussinessArea: new FormControl(''),
+    bussinessArea: new FormControl([]),
   });
 
   companies: Company[] = [];

@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   registerForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('tEst12#@', [passwordValidator, Validators.minLength(8), Validators.maxLength(12)]),
-    type: new FormControl('student')
+    type: new FormControl('student'),
   });
 
   studentForm = new FormGroup({
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     email: new FormControl('', [Validators.email, Validators.required]),
     yearOfStudy: new FormControl(null, []),
     hasGraduated: new FormControl(false, []),
-    profileImage: new FormControl('', []),
+    profileImage: new FormControl('', [Validators.required]),
   });
 
   companyForm = new FormGroup({
@@ -78,10 +78,6 @@ export class RegisterComponent implements OnInit {
     } catch (err) {
       this.loading = false;
     }
-  }
-
-  onLogin() {
-    this.router.navigate(['/auth/login']);
   }
 
   onNext(stepper: MatStepper) {

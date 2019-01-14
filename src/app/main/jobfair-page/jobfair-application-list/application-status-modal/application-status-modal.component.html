@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Update Application</h1>
+<div mat-dialog-content>
+  <form [formGroup]="updateForm">
+    <mat-form-field *ngIf="action === 'reject'">
+      <mat-label>Comment</mat-label>
+      <textarea matInput formControlName="comment"></textarea>
+    </mat-form-field>
+    <ng-container *ngIf="action !== 'reject'">
+      <mat-form-field appearance="standard">
+        <mat-label>Start Time</mat-label>
+        <input matInput [ngxTimepicker]="startTimePicker" [format]="24" formControlName="from">
+        <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>End Time</mat-label>
+        <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" [format]="24" formControlName="to">
+        <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
+      </mat-form-field>
+    </ng-container>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</div>

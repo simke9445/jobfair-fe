@@ -1,4 +1,6 @@
-export const passwordValidator = control => {
+import { AbstractControl } from '@angular/forms';
+
+export const passwordValidator = (control: AbstractControl) => {
   const validObj = validate(control.value);
   const errorEntry = Object.entries(validObj).filter(val => !val[1])[0];
 
@@ -51,3 +53,15 @@ const validate = password => {
     hasNoTwoSameAdjacentLetters,
   };
 };
+
+export const matchPasswordValidator = (control: AbstractControl) => {
+  let password = control.get('password').value;
+
+  let confirmPassword = control.get('confirmPassword').value;
+
+   if (password != confirmPassword) {
+       control.get('confirmPassword').setErrors({ matchPassword: true });
+   } else {
+       return null;
+   }
+}
