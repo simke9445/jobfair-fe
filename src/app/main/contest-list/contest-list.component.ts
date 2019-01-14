@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
@@ -25,16 +24,11 @@ export class ContestListComponent implements OnInit {
 
   constructor(
     private companyService: ContestService,
-    private router: Router,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.fetchResults();
-  }
-
-  onDetailsClick(contest) {
-    this.router.navigate([`/main/contests/${contest._id}`]);
   }
 
   addContest() {

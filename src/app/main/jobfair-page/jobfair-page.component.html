@@ -1,5 +1,6 @@
 <ng-container *ngIf="!loading">
   <app-jobfair-creation-form *ngIf="!activeFair && role === 'admin'"></app-jobfair-creation-form>
+  <p *ngIf="!activeFair && role === 'company'">There are no active fairs. Please check back later</p>
   <app-jobfair-application-list *ngIf="activeFair && role === 'admin'" [jobFairId]="activeFair._id" [applications]="activeFair.applications"
     [biographyInterval]="activeFair.biographyInterval" [applicationInterval]="activeFair.applicationInterval"></app-jobfair-application-list>
   <app-jobfair-application-form *ngIf="activeFair && role === 'company' && !application" [jobFair]="activeFair"></app-jobfair-application-form>

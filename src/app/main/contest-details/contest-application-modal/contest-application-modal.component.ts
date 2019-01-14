@@ -50,20 +50,20 @@ export class ContestApplicationModalComponent implements OnInit {
     this.onClose();
   }
 
-  onClose() {
-    this.dialogRef.close();
+  onClose(payload?) {
+    this.dialogRef.close(payload);
   }
 
   async onSave() {
     this.loading = true;
 
     try {
-      await this.contestService.saveContestApplication(
+      const application = await this.contestService.saveContestApplication(
         this.applicationForm.value,
         this.data.contest._id,
       );
       this.loading = false;
-      this.onClose();
+      this.onClose(application);
     } catch (err) {
       this.loading = false;
     }

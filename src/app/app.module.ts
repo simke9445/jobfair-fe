@@ -41,8 +41,6 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 import { appRoutes } from 'src/config/routes';
 import { AuthHeaderInterceptor, ErrorNotificationInterceptor, UnauthorizedInterceptor } from 'src/utils/interceptors';
-import { LocalStorageService } from 'src/services/localStorage.service';
-import { AuthService } from 'src/services/auth.service';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
@@ -70,6 +68,8 @@ import { JobfairApplicationListComponent } from './main/jobfair-page/jobfair-app
 import { JobfairApplicationDetailsComponent } from './main/jobfair-page/jobfair-application-details/jobfair-application-details.component';
 import { ApplicationStatusModalComponent } from './main/jobfair-page/jobfair-application-list/application-status-modal/application-status-modal.component';
 import { ChangePasswordComponent } from './auth/change-password/change-password.component';
+import { MyContestsComponent } from './main/my-contests/my-contests.component';
+import { ContestListComponent as CommonContestListComponent } from './common/contest-list/contest-list.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +84,7 @@ import { ChangePasswordComponent } from './auth/change-password/change-password.
     ContestListComponent,
     ContestDetailsComponent,
     FileUploadComponent,
+    CommonContestListComponent,
     NavigationComponent,
     HeaderComponent,
     FooterComponent,
@@ -99,6 +100,7 @@ import { ChangePasswordComponent } from './auth/change-password/change-password.
     JobfairApplicationDetailsComponent,
     ApplicationStatusModalComponent,
     ChangePasswordComponent,
+    MyContestsComponent,
   ],
   imports: [
     RouterModule.forRoot(

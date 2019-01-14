@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { JobfairService } from 'src/services/jobfair.service';
 import { JobFair, JobFairApplication } from 'src/models/jobfair';
+import { LocalStorageService } from 'src/services/localStorage.service';
 
 @Component({
   selector: 'app-jobfair-page',
@@ -15,14 +16,16 @@ export class JobfairPageComponent implements OnInit {
   activeFair: JobFair = null;
   loading = false;
   application: JobFairApplication = null;
-  role = 'admin';
+  role = null;
 
   constructor(
     private jobFairService: JobfairService,
+    private localStorageService: LocalStorageService,
   ) {}
 
   ngOnInit() {
     this.getData();
+    this.role = this.localStorageService.get('role');
   }
 
   async getData() {
@@ -32,11 +35,11 @@ export class JobfairPageComponent implements OnInit {
       this.activeFair = await this.jobFairService.getActiveFair();
       console.log(this.activeFair);
 
-      // if (this.role === 'company') {
-      //   // for company we return the company application at first spot, or if not applied
-      //   // we return an empty array
-      //   this.application = this.activeFair.applications[0];
-      // }
+      if (this.role === 'company') {
+        // for company we return the company application at first spot, or if not applied
+        // we return an empty array
+        this.application = this.activeFair && this.activeFair.applications[0];
+      }
 
       this.loading = false;
     } catch (err) {

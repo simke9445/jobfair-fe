@@ -1,0 +1,13 @@
+.contest-card {
+  margin: 20px 0;
+}
+
+.contest-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contest-list-item > .position {
+  width: 100px;
+}

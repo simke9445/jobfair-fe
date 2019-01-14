@@ -9,14 +9,18 @@
       <mat-icon>grade</mat-icon>
       Contests
     </button>
-    <button mat-button (click)="onNavigate('myContests')">
-      <mat-icon>grade</mat-icon>
-      My Contests
-    </button>
-    <button mat-button (click)="onNavigate('jobFair')">
-      <mat-icon>event</mat-icon>
-      Job Fair
-    </button>
+    <ng-container *ngIf="role !== 'admin'">
+      <button mat-button (click)="onNavigate('myContests')">
+        <mat-icon>grade</mat-icon>
+        My Contests
+      </button>
+    </ng-container>
+    <ng-container *ngIf="role !== 'student'">
+      <button mat-button (click)="onNavigate('jobFair')">
+        <mat-icon>event</mat-icon>
+        Job Fair
+      </button>
+    </ng-container>
   </ng-container>
 </div>
 <button mat-icon-button (click)="onNavigationClick()" class="navigation">

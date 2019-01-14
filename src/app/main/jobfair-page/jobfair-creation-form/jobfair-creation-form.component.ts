@@ -117,8 +117,8 @@ export class JobfairCreationFormComponent implements OnInit {
       });
 
       areas.forEach(area => this.areaControls.push(this.formBuilder.control(area)));
-      // schedules.forEach(schedule => this.scheduleControls.push(this.createSchedule(schedule)));
-      this.scheduleControls.push(this.createSchedule(schedules[0]));
+      schedules.forEach(schedule => this.scheduleControls.push(this.createSchedule(schedule)));
+      // this.scheduleControls.push(this.createSchedule(schedules[0]));
 
       this.uploadFilesStep.patchValue({
         jobFairFile: true,
@@ -203,8 +203,8 @@ export class JobfairCreationFormComponent implements OnInit {
     this.loading = true;
 
     try {
-      // await this.jobfairService.saveFair(this.formValues);
-      // this.loading = false;
+      await this.jobfairService.saveFair(this.formValues);
+      this.loading = false;
     } catch (err) {
       this.loading = false;
     }

@@ -2,9 +2,10 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { addHours, format, parse } from 'date-fns';
+import { Subscription } from 'rxjs';
 
 import { JobfairService } from 'src/services/jobfair.service';
-import { Subscription } from 'rxjs';
+import { JobFairApplicationStatus } from 'src/constants';
 
 @Component({
   selector: 'app-application-status-modal',
@@ -35,17 +36,20 @@ export class ApplicationStatusModalComponent implements OnInit, OnDestroy {
         this.updateForm = this.formBuilder.group({
           from: [application.schedule.from, Validators.required],
           to: [application.schedule.to, Validators.required],
+          status: [application.status],
         });
         break;
       case 'approve':
         this.updateForm = this.formBuilder.group({
           from: ['', Validators.required],
           to: ['', Validators.required],
+          status: [JobFairApplicationStatus.Accepted]
         });
         break;
       case 'reject':
         this.updateForm = this.formBuilder.group({
           comment: ['', Validators.required],
+          status: [JobFairApplicationStatus.Rejected],
         });
         break;
       default:
@@ -72,7 +76,7 @@ export class ApplicationStatusModalComponent implements OnInit, OnDestroy {
     try {
       const { application } = this.data;
       const payload = this.updateForm.value;
-      // await this.jobfairService.updateFairApplication(payload, application.fair, application._id);
+      await this.jobfairService.updateFairApplication(payload, application.fair, application._id);
       this.onCancel(payload);
       this.loading = false;
     } catch (err) {

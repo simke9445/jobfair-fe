@@ -31,19 +31,7 @@
   </button>
 </div>
 
-
 <div *ngIf="loading" class="spinner-container">
   <mat-spinner [diameter]="30"></mat-spinner>
 </div>
-<mat-card class="contest-card" *ngFor="let contest of contests">
-  <mat-card-content>
-    <h4 mat-line>
-      <div class="contest-list-item">
-        <span class="position">{{contest.position}}</span>
-        <span>{{contest.type}}</span>
-        <button mat-raised-button color="primary" (click)="onDetailsClick(contest)">Details</button>
-      </div>
-    </h4>
-    <p mat-line>Open until {{contest.to | date}} </p>
-  </mat-card-content>
-</mat-card>
+<app-common-contest-list [contests]="contests"></app-common-contest-list>
