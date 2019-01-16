@@ -27,7 +27,11 @@ export class CompanyService {
 
   getCompanyById(id: string) {
     return this.httpClient.get<Company>(`${this.url}/companies/${id}`)
-      .toPromise();
+      .toPromise()
+      .then((company: any) => ({
+        ...company,
+        image: `${this.url}/${company.image}`,
+      }));
   }
 
   saveCompanyReview(payload, id) {

@@ -118,7 +118,7 @@
             <mat-label>Specialization</mat-label>
             <input matInput formControlName="specialization">
           </mat-form-field>
-          <app-file-upload type="image" [options]="imageOptions" name="Logo Image" (fileReady)="onLogoReady($event)"></app-file-upload>
+          <app-file-upload type="image" [options]="imageOptions" name="Logo Image" (fileFormDataReady)="onLogoReady($event)"></app-file-upload>
         </div>
       </div>
       <div class="form__footer">
@@ -169,7 +169,7 @@
             <input matInput style="display: none">
             <mat-checkbox color="primary" formControlName="hasGraduated">Has Graduated</mat-checkbox>
           </mat-form-field>
-          <app-file-upload type="image" [options]="imageOptions" name="Profile Image" (fileReady)="onProfileReady($event)"></app-file-upload>
+          <app-file-upload type="image" [options]="imageOptions" name="Profile Image" (fileFormDataReady)="onProfileReady($event)"></app-file-upload>
         </div>
       </div>
       <div class="form__footer">

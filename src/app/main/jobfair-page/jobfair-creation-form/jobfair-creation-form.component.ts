@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
@@ -14,6 +14,8 @@ import { JobfairService } from 'src/services/jobfair.service';
   styleUrls: ['./jobfair-creation-form.component.css']
 })
 export class JobfairCreationFormComponent implements OnInit {
+  @Output('jobFairSubmit') jobFairSubmit$ = new EventEmitter();
+
   uploadFilesStep: FormGroup;
   basicInfoStep: FormGroup;
   advancedInfoStep: FormGroup;
@@ -32,6 +34,7 @@ export class JobfairCreationFormComponent implements OnInit {
 
   loading = false;
 
+  logoImage = null;
   imageOptions = {
     maxWidth: 300,
     minWidth: 100,
@@ -117,8 +120,8 @@ export class JobfairCreationFormComponent implements OnInit {
       });
 
       areas.forEach(area => this.areaControls.push(this.formBuilder.control(area)));
-      schedules.forEach(schedule => this.scheduleControls.push(this.createSchedule(schedule)));
-      // this.scheduleControls.push(this.createSchedule(schedules[0]));
+      // schedules.forEach(schedule => this.scheduleControls.push(this.createSchedule(schedule)));
+      this.scheduleControls.push(this.createSchedule(schedules[0]));
 
       this.uploadFilesStep.patchValue({
         jobFairFile: true,
@@ -163,7 +166,11 @@ export class JobfairCreationFormComponent implements OnInit {
     this.areaControls.removeAt(index);
   }
 
-  onJobFairLogoReady(logoImage) {
+  onLogoPreviewReady(logoImage) {
+    this.logoImage = logoImage;
+  }
+
+  onLogoFileReady(logoImage) {
     this.advancedInfoStep.patchValue({
       logoImage,
     });
@@ -203,7 +210,10 @@ export class JobfairCreationFormComponent implements OnInit {
     this.loading = true;
 
     try {
-      await this.jobfairService.saveFair(this.formValues);
+      const { logoImage, ...payload } = this.formValues;
+
+      await this.jobfairService.saveFair(payload, logoImage);
+      this.jobFairSubmit$.emit();
       this.loading = false;
     } catch (err) {
       this.loading = false;

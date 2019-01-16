@@ -15,7 +15,11 @@ export class StudentService {
 
   getStudentById(id: string) {
     return this.httpClient.get(`${this.url}/students/${id}`)
-      .toPromise();
+      .toPromise()
+      .then((student: any) => ({
+        ...student,
+        image: `${this.url}/${student.image}`,
+      }));
   }
 
   saveStudentBiography(payload, id) {

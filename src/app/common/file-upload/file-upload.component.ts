@@ -12,8 +12,10 @@ export class FileUploadComponent implements OnInit {
   @Input('type') fileType: String = 'image';
   @Input('options') fileOptions: any = {};
   @Input('name') inputName: String;
+  @Input('multiple') multiple = false;
 
   @Output('fileReady') fileReady$ = new EventEmitter();
+  @Output('fileFormDataReady') fileFormDataReady$ = new EventEmitter();
 
   isError = false;
 
@@ -33,6 +35,10 @@ export class FileUploadComponent implements OnInit {
     this.isError = false;
     this.fileReady$.emit(result);
     this.fileButton._elementRef.nativeElement.innerText = name;
+  }
+
+  onFileFormDataReady(fileFormData) {
+    this.fileFormDataReady$.emit(fileFormData);
   }
 
   onImageLoad(reader: FileReader, file: File) {
@@ -61,7 +67,7 @@ export class FileUploadComponent implements OnInit {
   onJSONLoad(reader: FileReader, file: File) {
     try {
       const parsedJSON = JSON.parse(reader.result as string);
-      
+
       this.submitResult(parsedJSON, file.name);
     } catch (err) {
       this.isError = true;
@@ -72,7 +78,10 @@ export class FileUploadComponent implements OnInit {
     const reader = new FileReader();
 
     if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
+      const files = event.target.files;
+      const [file] = files;
+
+      this.onFileFormDataReady(this.multiple ? files : file);
 
       reader.onload = () => {
         switch (this.fileType) {

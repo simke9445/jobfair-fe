@@ -32,8 +32,14 @@ export class AuthService {
       });
   }
 
-  register(payload) {
-    return this.http.post(`${this.url}/auth/register`, payload)
+  register(payload, image) {
+    const formData = new FormData();
+
+    Object.keys(payload).forEach(key => formData.append(key, payload[key]));
+
+    formData.append('image', image);
+
+    return this.http.post(`${this.url}/auth/register`, formData)
       .toPromise()
       .then(() => {
         this.toastrService.success('Account created successfully!');

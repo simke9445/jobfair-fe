@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
+import { JobFair } from 'src/models/jobfair';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +14,8 @@ export class JobfairService {
 
   constructor(
     private httpClient: HttpClient,
+    private toastrService: ToastrService,
+    private router: Router,
   ) { }
 
   async getActiveFair() {
@@ -29,9 +34,20 @@ export class JobfairService {
     return jobFair;
   }
 
-  saveFair(payload) {
+  saveFair(payload, logoImage) {
     return this.httpClient.post(`${this.url}/jobfairs`, payload)
-      .toPromise();
+      .toPromise()
+      .then((jobFair: JobFair) => {
+        const formData = new FormData();
+        formData.append('logoImage', logoImage);
+
+        return this.httpClient.post(`${this.url}/jobfairs/${jobFair._id}/images`, formData)
+          .toPromise()
+          .then(() => {
+            this.toastrService.success('Fair uploaded successfully!');
+            return this.router.navigate(['/main/jobfair']);
+          });
+      });
   }
 
   updateFair(payload, id) {

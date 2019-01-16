@@ -58,21 +58,24 @@ export class RegisterComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
   }
 
   async onSubmit(stepper: MatStepper) {
+    const isStudent = this.registerForm.value.type === 'student';
     const payload = {
       ...this.registerForm.value,
-      ...(this.registerForm.value.type === 'student' ? this.studentForm.value : this.companyForm.value),
+      ...(isStudent ? this.studentForm.value : this.companyForm.value),
     };
 
     try {
       this.loading = true;
 
-      await this.authService.register(payload);
+      const { profileImage, logoImage, ...fieldPayload } = payload;
+
+      await this.authService.register(fieldPayload, isStudent ? profileImage : logoImage);
 
       this.loading = false;
     } catch (err) {

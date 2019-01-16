@@ -51,4 +51,8 @@ export class JobfairPageComponent implements OnInit {
   onApplicationSubmit() {
     this.getData();
   }
+
+  onJobFairSubmit() {
+    this.getData();
+  }
 }

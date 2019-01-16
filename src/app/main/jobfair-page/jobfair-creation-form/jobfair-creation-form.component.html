@@ -41,12 +41,14 @@
           <div class='form__content--split__side'>
             <mat-form-field appearance="standard">
               <mat-label>Start Time</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="startTimePicker" [format]="24" formControlName="startTime">
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="startTimePicker" [format]="24"
+                formControlName="startTime">
               <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>End Time</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" [format]="24" formControlName="endTime">
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" [format]="24"
+                formControlName="endTime">
               <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
@@ -77,7 +79,8 @@
     <form [formGroup]="advancedInfoStep" class="content-container">
       <ng-template matStepLabel>Advanced Info</ng-template>
       <div class="content">
-        <app-file-upload type="image" [options]="imageOptions" name="JobFair Logo" (fileReady)="onJobFairLogoReady($event)"></app-file-upload>
+        <app-file-upload type="image" [options]="imageOptions" name="JobFair Logo" (fileFormDataReady)="onLogoFileReady($event)"
+          (fileReady)="onLogoPreviewReady($event)"></app-file-upload>
         <ul class="schedule-list" formArrayName="schedules">
           <li *ngFor="let schedule of scheduleControls.controls;let i = index" [formGroupName]="i" class="full-width">
             <mat-form-field appearance="standard">
@@ -98,12 +101,14 @@
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>From</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleFromTimePicker" [format]="24" formControlName="from" />
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleFromTimePicker" [format]="24"
+                formControlName="from" />
               <ngx-material-timepicker #scheduleFromTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>To</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleToTimePicker" [format]="24" formControlName="to" />
+              <input matInput readonly [disableClick]="true" [ngxTimepicker]="scheduleToTimePicker" [format]="24"
+                formControlName="to" />
               <ngx-material-timepicker #scheduleToTimePicker></ngx-material-timepicker>
             </mat-form-field>
           </li>
@@ -205,6 +210,7 @@
     <ng-template matStepLabel>Finalize</ng-template>
     <div class="content-container">
       <div class="content">
+        <img mat-avatar class="logo-image" src="{{logoImage}}" />
         <h1>Basic Info</h1>
         <div class="label-container">
           <app-label-field [value]="formValues.name" label="Name"></app-label-field>
