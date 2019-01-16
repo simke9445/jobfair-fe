@@ -10,24 +10,24 @@
   </div>
   <button *ngIf="contest.isOngoing && role === 'student'" mat-raised-button (click)="onContestApply(contest)">Apply</button>
   <mat-divider class="divider"></mat-divider>
-  <button *ngIf="!contest.isOngoing && isCompanyContest" mat-raised-button (click)="onApplicationApprove(contest)">Approve
-    applications</button>
-  <mat-list class="application-list">
-    <h1>Applications</h1>
-    <p *ngIf="contest.applications.length === 0">No Applications submitted yet.</p>
-    <mat-list-item *ngFor="let application of contest.applications">
-      <h4 mat-line class="application-details">
-        <span>{{application.student.firstName}} {{application.student.lastName}}</span>
-        <a mat-raised-button color="primary" routerLink="/main/students/{{application.student._id}}">Details</a>
-      </h4>
-      <div mat-line>
-        <ng-container *ngIf="!contest.isOngoing && isCompanyContest">
-          <mat-checkbox color="primary" class="application-details-checkbox"></mat-checkbox>
-        </ng-container>
-        <span>{{application.status}}</span>
-      </div>
-    </mat-list-item>
-  </mat-list>
+  <form [formGroup]="applicationsForm">
+    <button *ngIf="!contest.isOngoing && isCompanyContest && contest.applications.length > 0" mat-raised-button (click)="onApplicationApprove(contest)">Approve
+      applications</button>
+    <mat-list class="application-list" formArrayName="applications">
+      <h1>Applications</h1>
+      <p *ngIf="contest.applications.length === 0">No Applications for preview yet.</p>
+      <mat-list-item *ngFor="let control of applicationControls;let i = index;">
+        <h4 mat-line class="application-details">
+          <span>{{contest.applications[i].student.firstName}} {{contest.applications[i].student.lastName}}</span>
+          <a mat-raised-button color="primary" routerLink="/main/students/{{contest.applications[i].student._id}}">Details</a>
+        </h4>
+        <div mat-line>
+          <mat-checkbox [formControl]="control" [class.invisible]="contest.isOngoing || !isCompanyContest" color="primary" class="application-details-checkbox"></mat-checkbox>
+          <span>{{contest.applications[i].status}}</span>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </form>
 </div>
 
 <div *ngIf="loading" class="spinner-container">

@@ -17,15 +17,15 @@ import { LocalStorageService } from 'src/services/localStorage.service';
 export class AuthHeaderInterceptor implements HttpInterceptor {
   constructor(
     private localStorageService: LocalStorageService,
-  ) {}
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token: string = this.localStorageService.get('token');
 
     if (token) {
-        req = req.clone({
-          headers: req.headers.set('Authorization', `Bearer ${token}`),
-        });
+      req = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`),
+      });
     }
 
     return next.handle(req);
@@ -37,7 +37,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService,
-  ) {}
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
@@ -55,26 +55,30 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class ErrorNotificationInterceptor implements HttpInterceptor {
-  constructor(private toastrService: ToastrService) {}
+  constructor(private toastrService: ToastrService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
 
-         if (error.error instanceof ErrorEvent) {
-           // client-side error
-           errorMessage = `${error.error.message}`;
-         } else {
-           // server-side error
-           errorMessage = `${error.status} ${error.error.message}`;
-         }
+        if (error.error instanceof ErrorEvent) {
+          // client-side error
+          errorMessage = `${error.error.message}`;
+        } else {
+          // server-side error
+          if (error.error.message) {
+            errorMessage = `${error.status} ${error.error.message}`;
+          } else {
+            errorMessage = `Something went wrong!`;
+          }
+        }
 
-         this.toastrService.error('', errorMessage, {
+        this.toastrService.error('', errorMessage, {
           progressBar: true,
-         });
+        });
 
-         return throwError(errorMessage);
+        return throwError(errorMessage);
       }),
     );
   }

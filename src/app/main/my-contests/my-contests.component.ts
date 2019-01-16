@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContestService } from 'src/services/contest.service';
 
 @Component({
   selector: 'app-my-contests',
@@ -6,10 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-contests.component.css']
 })
 export class MyContestsComponent implements OnInit {
+  contests = [];
+  loading = false;
 
-  constructor() { }
+  constructor(
+    private companyService: ContestService,
+  ) { }
 
   ngOnInit() {
+    this.fetchResults();
   }
 
+  async fetchResults() {
+    this.loading = true;
+
+    try {
+      this.contests = await this.companyService.getContests({}, 'personal');
+      this.loading = false;
+    } catch (err) {
+      this.loading = false;
+    }
+  }
 }

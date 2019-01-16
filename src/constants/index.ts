@@ -29,3 +29,9 @@ export enum JobFairApplicationStatus {
   Rejected = 'REJECTED',
   Accepted = 'ACCEPTED',
 }
+
+export enum ContestApplicationStatus {
+  Accepted = 'ACCEPTED',
+  Rejected = 'REJECTED',
+  Pending = 'PENDING',
+}

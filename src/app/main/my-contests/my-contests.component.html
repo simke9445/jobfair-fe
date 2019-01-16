@@ -1,3 +1,4 @@
-<p>
-  my-contests works!
-</p>
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div>
+<app-common-contest-list [contests]="contests"></app-common-contest-list>

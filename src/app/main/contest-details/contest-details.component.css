@@ -47,3 +47,7 @@
 .application-list {
   margin-top: 10px;
 }
+
+.invisible {
+  display: none;
+}

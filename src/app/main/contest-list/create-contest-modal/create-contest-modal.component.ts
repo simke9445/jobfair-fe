@@ -25,7 +25,6 @@ export class CreateContestModalComponent implements OnInit {
   async ngOnInit() {
     this.contestForm = this.formBuilder.group({
       position: ['', Validators.required],
-      from: ['', Validators.required],
       to: ['', Validators.required],
       type: ['', Validators.required],
       description: ['', Validators.required],

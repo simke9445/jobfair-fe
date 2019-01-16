@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 import { ContestService } from 'src/services/contest.service';
+import { LocalStorageService } from 'src/services/localStorage.service';
+import { ContestApplicationStatus } from 'src/constants';
 
 import { ContestApplicationModalComponent } from './contest-application-modal/contest-application-modal.component';
-import { LocalStorageService } from 'src/services/localStorage.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contest-details',
@@ -19,6 +21,8 @@ export class ContestDetailsComponent implements OnInit {
   id = null;
   role = null;
   userId = null;
+  applicationsForm: FormGroup;
+  applicationControls: FormArray;
 
   constructor(
     private contestService: ContestService,
@@ -26,6 +30,7 @@ export class ContestDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private localStorageService: LocalStorageService,
     private toastrService: ToastrService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -55,8 +60,24 @@ export class ContestDetailsComponent implements OnInit {
     });
   }
 
-  onApplicationApprove(contest) {
-    console.log('approved applications', contest);
+  async onApplicationApprove() {
+    try {
+      this.loading = true;
+      const formValue = this.applicationsForm.value.applications;
+
+      const applicationIds = this.contest.applications
+        .filter((_, index) => formValue[index])
+        .map((x => x._id));
+
+      await this.contestService.updateContestApplications({
+        applicationIds,
+        status: ContestApplicationStatus.Accepted,
+      }, this.id);
+      this.fetchData();
+      this.loading = false;
+    } catch (err) {
+      this.loading = false;
+    }
   }
 
   async fetchData() {
@@ -65,6 +86,10 @@ export class ContestDetailsComponent implements OnInit {
     try {
       this.contest = await this.contestService.getContestById(this.id);
       console.log(this.contest);
+      this.applicationsForm = this.formBuilder.group({
+        applications: this.formBuilder.array(this.contest.applications.map(() => false)),
+      });
+      this.applicationControls = (this.applicationsForm.controls.applications as any).controls;
       this.loading = false;
     } catch (err) {
       this.loading = false;

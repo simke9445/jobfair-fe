@@ -7,7 +7,7 @@
   <ng-container *ngIf="role">
     <button mat-button (click)="onNavigate('contests')">
       <mat-icon>grade</mat-icon>
-      Contests
+      Open Contests
     </button>
     <ng-container *ngIf="role !== 'admin'">
       <button mat-button (click)="onNavigate('myContests')">

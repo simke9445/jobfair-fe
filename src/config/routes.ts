@@ -11,6 +11,7 @@ import { ContestListComponent } from 'src/app/main/contest-list/contest-list.com
 import { ContestDetailsComponent } from 'src/app/main/contest-details/contest-details.component';
 import { JobfairPageComponent } from 'src/app/main/jobfair-page/jobfair-page.component';
 import { ChangePasswordComponent } from 'src/app/auth/change-password/change-password.component';
+import { MyContestsComponent } from 'src/app/main/my-contests/my-contests.component';
 
 export const appRoutes: Routes = [
   {
@@ -32,6 +33,7 @@ export const appRoutes: Routes = [
       { path: 'companies/:id', component: CompanyDetailsComponent },
       { path: 'contests', component: ContestListComponent },
       { path: 'contests/:id', component: ContestDetailsComponent },
+      { path: 'my-contests', component: MyContestsComponent },
       { path: 'jobfair', component: JobfairPageComponent },      
       { path: '', pathMatch: 'full', redirectTo: 'companies' },
     ],

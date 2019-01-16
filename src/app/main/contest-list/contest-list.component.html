@@ -25,7 +25,7 @@
     <mat-icon>search</mat-icon>
     Search
   </button>
-  <button mat-button (click)="addContest()">
+  <button *ngIf="role === 'company'" mat-button (click)="addContest()">
     <mat-icon>add</mat-icon>
     Add
   </button>

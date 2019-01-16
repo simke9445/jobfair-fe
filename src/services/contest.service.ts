@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class ContestService {
 
   constructor(
     private httpClient: HttpClient,
+    private toastrService: ToastrService,
   ) { }
 
   getContests(filter: any, status) {
@@ -29,11 +31,32 @@ export class ContestService {
 
   saveContest(payload) {
     return this.httpClient.post(`${this.url}/contests`, payload)
-      .toPromise();
+      .toPromise()
+      .then(contest => {
+        this.toastrService.success('Contest saved successfully!');
+        return contest;
+      });
+  }
+
+  updateContestApplications(payload, id) {
+    return this.httpClient.patch(`${this.url}/contests/${id}/applications`, payload)
+      .toPromise()
+      .then(applications => {
+        this.toastrService.success('Applications updated successfully!');
+        return applications;
+      });
   }
 
   saveContestApplication(payload, id) {
-    return this.httpClient.post(`${this.url}/contests/${id}/applications`, payload)
-      .toPromise();
+    const formData = new FormData();
+
+    Object.keys(payload).forEach(key => formData.append(key, payload[key]));
+
+    return this.httpClient.post(`${this.url}/contests/${id}/applications`, formData)
+      .toPromise()
+      .then(application => {
+        this.toastrService.success('Application created successfully!');
+        return application;
+      });
   }
 }

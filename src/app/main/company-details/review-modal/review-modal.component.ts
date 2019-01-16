@@ -23,16 +23,16 @@ export class ReviewModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
   ) {}
 
-  onCancel() {
-    this.dialogRef.close();
+  onCancel(payload?) {
+    this.dialogRef.close(payload);
   }
 
   async onSave() {
     this.loading = true;
 
     try {
-      await this.companyService.saveCompanyReview(this.reviewForm.value, this.data.company._id);
-      this.onCancel();
+      const review = await this.companyService.saveCompanyReview(this.reviewForm.value, this.data.company._id);
+      this.onCancel(review);
       this.loading = false;
     } catch (err) {
       this.loading = false;

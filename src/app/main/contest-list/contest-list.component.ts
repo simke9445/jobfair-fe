@@ -6,6 +6,7 @@ import { contestTypes } from 'src/constants';
 import { ContestService } from 'src/services/contest.service';
 
 import { CreateContestModalComponent } from './create-contest-modal/create-contest-modal.component';
+import { LocalStorageService } from 'src/services/localStorage.service';
 
 @Component({
   selector: 'app-contest-list',
@@ -21,14 +22,17 @@ export class ContestListComponent implements OnInit {
   contestTypes = contestTypes;
   loading = false;
   contests = [];
+  role = null;
 
   constructor(
     private companyService: ContestService,
     private dialog: MatDialog,
+    private localStorageService: LocalStorageService,
   ) { }
 
   ngOnInit() {
     this.fetchResults();
+    this.role = this.localStorageService.get('role');
   }
 
   addContest() {

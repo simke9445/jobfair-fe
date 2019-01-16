@@ -13,7 +13,9 @@ import { ReviewModalComponent } from './review-modal/review-modal.component';
 })
 export class CompanyDetailsComponent implements OnInit {
 
-  company = {};
+  company = {
+    contests: [],
+  };
   loading = false;
   id = null;
 
@@ -41,8 +43,10 @@ export class CompanyDetailsComponent implements OnInit {
       data: { company }
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((payload) => {
+      if (payload) {
+        this.fetchData();
+      }
     });
   }
 
