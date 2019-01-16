@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 import { environment } from 'src/environments/environment';
 
@@ -11,6 +12,7 @@ export class StudentService {
 
   constructor(
     private httpClient: HttpClient,
+    private toastrService: ToastrService,
   ) { }
 
   getStudentById(id: string) {
@@ -24,6 +26,10 @@ export class StudentService {
 
   saveStudentBiography(payload, id) {
     return this.httpClient.post(`${this.url}/students/${id}/biography`, payload)
-      .toPromise();
+      .toPromise()
+      .then(biography => {
+        this.toastrService.success('Biography saved successfully!');
+        return biography;
+      });
   }
 }

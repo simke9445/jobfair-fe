@@ -52,16 +52,28 @@ export class JobfairService {
 
   updateFair(payload, id) {
     return this.httpClient.patch(`${this.url}/jobfairs/${id}`, payload)
-      .toPromise();
+      .toPromise()
+      .then(fair => {
+        this.toastrService.success('Fair updated successfully!');
+        return fair;
+      });
   }
 
   saveFairApplication(payload, fairId) {
     return this.httpClient.post(`${this.url}/jobfairs/${fairId}/applications`, payload)
-      .toPromise();
+      .toPromise()
+      .then(application => {
+        this.toastrService.success('Application saved succesfully!');
+        return application;
+      });
   }
 
   updateFairApplication(payload, fairId, id) {
     return this.httpClient.patch(`${this.url}/jobfairs/${fairId}/applications/${id}`, payload)
-      .toPromise();
+      .toPromise()
+      .then(application => {
+        this.toastrService.success('Application updated successfully!');
+        return application;
+      });
   }
 }

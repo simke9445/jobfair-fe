@@ -6,7 +6,6 @@ import { ApplicationStatusModalComponent } from './application-status-modal/appl
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JobfairService } from 'src/services/jobfair.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-jobfair-application-list',
@@ -26,7 +25,6 @@ export class JobfairApplicationListComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private jobFairService: JobfairService,
-    private toastrService: ToastrService,
   ) {}
 
   ngOnInit() {
@@ -47,7 +45,6 @@ export class JobfairApplicationListComponent implements OnInit {
       const payload = this.intervalsForm.value;
 
       await this.jobFairService.updateFair(payload, this.jobFairId);
-      this.toastrService.success('Intervals updated!');
     } catch (err) {
       console.log(err);
     }

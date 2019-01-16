@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { ContestService } from 'src/services/contest.service';
 import { LocalStorageService } from 'src/services/localStorage.service';
@@ -29,7 +28,6 @@ export class ContestDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private localStorageService: LocalStorageService,
-    private toastrService: ToastrService,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -55,7 +53,6 @@ export class ContestDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((application) => {
       if (application) {
         this.fetchData();
-        this.toastrService.success('Application submitted succesfully!');
       }
     });
   }

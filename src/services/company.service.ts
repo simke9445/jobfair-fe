@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Company } from 'src/models/company';
 import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class CompanyService {
 
   constructor(
     private httpClient: HttpClient,
+    private toastrService: ToastrService,
   ) { }
 
   getCompanies(filter: any) {
@@ -36,6 +38,10 @@ export class CompanyService {
 
   saveCompanyReview(payload, id) {
     return this.httpClient.post(`${this.url}/companies/${id}/review`, payload)
-      .toPromise();
+      .toPromise()
+      .then(review => {
+        this.toastrService.success('Review created successfully!');
+        return review;
+      });
   }
 }
