@@ -11,8 +11,8 @@
   <button *ngIf="contest.isOngoing && role === 'student'" mat-raised-button (click)="onContestApply(contest)">Apply</button>
   <mat-divider class="divider"></mat-divider>
   <form [formGroup]="applicationsForm">
-    <button *ngIf="!contest.isOngoing && isCompanyContest && contest.applications.length > 0" mat-raised-button (click)="onApplicationApprove(contest)">Approve
-      applications</button>
+    <button class="application-action" *ngIf="!contest.isOngoing && isCompanyContest && contest.applications.length > 0" mat-raised-button (click)="onApplicationApprove()">Approve</button>
+    <button class="application-action" *ngIf="!contest.isOngoing && isCompanyContest && contest.applications.length > 0" mat-raised-button (click)="onApplicationReject()">Reject</button>
     <mat-list class="application-list" formArrayName="applications">
       <h1>Applications</h1>
       <p *ngIf="contest.applications.length === 0">No Applications for preview yet.</p>

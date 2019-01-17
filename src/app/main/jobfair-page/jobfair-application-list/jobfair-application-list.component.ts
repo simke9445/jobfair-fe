@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { JobFairApplicationStatus } from 'src/constants';
-import { JobFairApplication, JobFair, JobFairInterval } from 'src/models/jobfair';
+import { JobFairApplication, JobFair, JobFairInterval, JobFairSchedule } from 'src/models/jobfair';
 import { ApplicationStatusModalComponent } from './application-status-modal/application-status-modal.component';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,10 +13,14 @@ import { JobfairService } from 'src/services/jobfair.service';
   styleUrls: ['./jobfair-application-list.component.css']
 })
 export class JobfairApplicationListComponent implements OnInit {
+  @Input() image: string;
   @Input() applications: JobFairApplication[];
   @Input() biographyInterval: JobFairInterval;
   @Input() applicationInterval: JobFairInterval;
   @Input() jobFairId: string;
+  @Input() schedules: JobFairSchedule[];
+
+  @Output('applicationUpdated') applicationUpdated$ = new EventEmitter();
 
   intervalsForm: FormGroup;
   applicationStatus = JobFairApplicationStatus;
@@ -52,8 +56,8 @@ export class JobfairApplicationListComponent implements OnInit {
 
   onStatusUpdate(application, action) {
     const dialogRef = this.dialog.open(ApplicationStatusModalComponent, {
-      width: '400px',
-      data: { application, action }
+      width: action === 'reject' ? '400px' : '800px',
+      data: { application, action, schedules: this.schedules }
     });
 
     dialogRef.afterClosed().subscribe((payload) => {
@@ -61,20 +65,7 @@ export class JobfairApplicationListComponent implements OnInit {
         return;
       }
 
-      switch (action) {
-        case 'approve':
-        case 'update':
-          application.schedule.from = payload.from;
-          application.schedule.to = payload.to;
-          application.status = JobFairApplicationStatus.Accepted;
-          break;
-        case 'reject':
-          application.comment = payload.comment;
-          application.status = JobFairApplicationStatus.Rejected;
-          break;
-        default:
-          break;
-      }
+      this.applicationUpdated$.emit();
     });
   }
 }

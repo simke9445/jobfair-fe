@@ -60,3 +60,7 @@ ul, li {
 .card-header__controls > button {
   margin: 0 5px;
 }
+
+.applications-container {
+  align-self: flex-start;
+}

@@ -1,3 +1,10 @@
+:host {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .content-container {
   height: 500px;
   display: flex;
@@ -9,8 +16,8 @@
   flex: 1 1 auto;
   width: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
   height: 400px;
+  min-width: 700px;
 }
 
 .step-controls {
@@ -64,4 +71,17 @@ ul, li {
 
 .mat-divider {
   margin: 20px 0;
+}
+
+.logo-container {
+  margin: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.logo-image {
+  max-width: 300px;
+  max-height: 300px;
 }

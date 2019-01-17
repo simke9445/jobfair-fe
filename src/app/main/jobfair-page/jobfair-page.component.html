@@ -1,11 +1,13 @@
 <ng-container *ngIf="!loading">
   <app-jobfair-creation-form *ngIf="!activeFair && role === 'admin'" (jobFairSubmit)="onJobFairSubmit()"></app-jobfair-creation-form>
   <p *ngIf="!activeFair && role === 'company'">There are no active fairs. Please check back later</p>
-  <app-jobfair-application-list *ngIf="activeFair && role === 'admin'" [jobFairId]="activeFair._id" [applications]="activeFair.applications"
-    [biographyInterval]="activeFair.biographyInterval" [applicationInterval]="activeFair.applicationInterval"></app-jobfair-application-list>
-  <app-jobfair-application-form *ngIf="activeFair && role === 'company' && !application" [jobFair]="activeFair"></app-jobfair-application-form>
+  <app-jobfair-application-list *ngIf="activeFair && role === 'admin'" [schedules]="activeFair.schedules" [jobFairId]="activeFair._id"
+    [applications]="activeFair.applications" [biographyInterval]="activeFair.biographyInterval" [applicationInterval]="activeFair.applicationInterval"
+    [image]="activeFair.logoImage" (applicationUpdated)="onApplicationSubmit()"></app-jobfair-application-list>
+  <app-jobfair-application-form *ngIf="activeFair && role === 'company' && !application" [jobFair]="activeFair"
+    (applicationSubmit)="onApplicationSubmit()"></app-jobfair-application-form>
   <app-jobfair-application-details *ngIf="activeFair && role === 'company' && application" [application]="application"
-    (applicationSubmit)="onApplicationSubmit()"></app-jobfair-application-details>
+    [name]="activeFair.name" [logoImage]="activeFair.logoImage" (applicationSubmit)="onApplicationSubmit()"></app-jobfair-application-details>
 </ng-container>
 <ng-container *ngIf="loading">
   <mat-spinner [diameter]="50"></mat-spinner>

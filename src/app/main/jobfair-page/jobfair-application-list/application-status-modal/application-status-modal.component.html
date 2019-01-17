@@ -1,21 +1,26 @@
 <h1 mat-dialog-title>Update Application</h1>
 <div mat-dialog-content>
-  <form [formGroup]="updateForm">
+  <form [formGroup]="updateForm" class="form-content">
     <mat-form-field *ngIf="action === 'reject'">
       <mat-label>Comment</mat-label>
       <textarea matInput formControlName="comment"></textarea>
     </mat-form-field>
     <ng-container *ngIf="action !== 'reject'">
-      <mat-form-field appearance="standard">
-        <mat-label>Start Time</mat-label>
-        <input matInput [ngxTimepicker]="startTimePicker" [format]="24" formControlName="from">
-        <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
-      </mat-form-field>
-      <mat-form-field appearance="standard">
-        <mat-label>End Time</mat-label>
-        <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" [format]="24" formControlName="to">
-        <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
-      </mat-form-field>
+      <h2 mat-dialog-title>Available Schedules</h2>
+      <ul formArrayName="schedules">
+        <li class="schedule-item" *ngFor="let scheduleCtrl of scheduleControls;let i = index">
+          <div mat-line class="mat-typography" class="schedule-ctrl">
+            <mat-checkbox color="primary" [formControl]="scheduleCtrl">
+              <span>{{schedules[i].area}}</span>
+            </mat-checkbox>
+            <span class="mat-typography schedule-type">{{schedules[i].type}}</span>
+          </div>
+          <div mat-line class="mat-typography schedule-dates">
+            <span>From {{schedules[i].from | date: 'medium'}}</span>
+            <span>To {{schedules[i].to | date: 'medium'}}</span>
+          </div>
+        </li>
+      </ul>
     </ng-container>
   </form>
 </div>

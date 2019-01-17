@@ -11,3 +11,8 @@
 .contest-list-item > .position {
   width: 100px;
 }
+
+.empty-state {
+  text-align: center !important;
+  padding-top: 40px !important;
+}

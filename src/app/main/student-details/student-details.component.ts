@@ -36,7 +36,7 @@ export class StudentDetailsComponent implements OnInit {
       data: { student }
     });
 
-    dialogRef.afterClosed().subscribe(({ shouldRefresh }) => {
+    dialogRef.afterClosed().subscribe((shouldRefresh) => {
       if (shouldRefresh) {
         this.fetchData();
       }

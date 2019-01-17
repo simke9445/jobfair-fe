@@ -63,3 +63,7 @@ ul, li {
 .save-control > mat-spinner {
   margin-left: 20px;
 }
+
+.save-control >>> circle {
+  stroke: #ffffff;
+}

@@ -12,13 +12,14 @@
     </div>
   </div>
   <mat-divider class="divider"></mat-divider>
-  <button *ngIf="student.biographyUpdateAllowed || true" mat-raised-button (click)="onBiographyUpdate(student)">Update Biography</button>
+  <button *ngIf="student.biographyUpdateAllowed || true" mat-raised-button (click)="onBiographyUpdate(student)">{{ !student.biography ? 'Upload' : 'Update' }} Biography</button>
   <div class="biography-container">
     <h1>Biography</h1>
     <p *ngIf="!student.biography">No biography uploaded yet.</p>
     <ul *ngIf="student.biography">
       <li>
         <h2>Personal Info</h2>
+        <mat-divider></mat-divider>
         <div class="label-container">
           <app-label-field [value]="student.biography.firstName" label="First Name"></app-label-field>
           <app-label-field [value]="student.biography.lastName" label="lastName"></app-label-field>
@@ -33,6 +34,7 @@
       </li>
       <li *ngIf="student.biography.educationExperiences.length > 0">
         <h2>Education</h2>
+        <mat-divider></mat-divider>
         <ul class="exp-list">
           <li *ngFor="let exp of student.biography.educationExperiences">
             <h3>{{exp.position}} {{exp.from | date}} - {{exp.to | date}}</h3>
@@ -48,6 +50,7 @@
       </li>
       <li *ngIf="student.biography.workExperiences.length > 0">
         <h2>Work Experience</h2>
+        <mat-divider></mat-divider>
         <ul>
           <li *ngFor="let exp of student.biography.workExperiences">
             <h3>{{exp.position}} {{exp.from | date}} - {{exp.to | date}}</h3>
@@ -63,6 +66,7 @@
       </li>
       <li *ngIf="student.biography.spokenLanguages.length > 0">
         <h2>Spoken languages</h2>
+        <mat-divider></mat-divider>
         <ul>
           <li *ngFor="let lang of student.biography.spokenLanguages">
             {{lang}}
@@ -71,6 +75,7 @@
       </li>
       <li *ngIf="student.biography.skills.length > 0">
         <h2>Skills</h2>
+        <mat-divider></mat-divider>
         <ul>
           <li *ngFor="let skill of student.biography.skills">
             {{skill}}

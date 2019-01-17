@@ -10,6 +10,8 @@ import { JobFairApplicationStatus } from 'src/constants';
 })
 export class JobfairApplicationDetailsComponent implements OnInit {
   @Input() application: JobFairApplication;
+  @Input() logoImage: string;
+  @Input() name: string;
 
   JobFairApplicationStatus = JobFairApplicationStatus;
 

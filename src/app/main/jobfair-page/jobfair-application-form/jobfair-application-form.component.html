@@ -1,4 +1,16 @@
-<mat-horizontal-stepper [linear]="true" #stepper>
+<div class="logo-container">
+  <img class="logo-image" src="{{jobFair.logoImage}}" />
+  <h1>{{jobFair.name}}</h1>
+  <ng-container *ngIf="!jobFair.applyAllowed">
+    <p>Applications not allowed at this moment.</p>
+    <ng-container *ngIf="jobFair.applicationInterval">
+      <p>Application interval is from {{jobFair.applicationInterval.from}} to
+        {{jobFair.applicationInterval.to}}</p>
+    </ng-container>
+  </ng-container>
+</div>
+
+<mat-horizontal-stepper *ngIf="jobFair.applyAllowed" [linear]="true" #stepper>
   <mat-step [stepControl]="applicationDetailsStep">
     <form [formGroup]="applicationDetailsStep" class="content-container">
       <ng-template matStepLabel>Application details</ng-template>

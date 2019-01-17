@@ -27,11 +27,19 @@ export class JobfairService {
     }).toPromise();
 
     if (jobFair) {
-      jobFair = await this.httpClient.get(`${this.url}/jobfairs/${jobFair._id}`)
-        .toPromise();
+      jobFair = await this.getFairById(jobFair._id);
     }
 
     return jobFair;
+  }
+
+  getFairById(id) {
+    return this.httpClient.get(`${this.url}/jobfairs/${id}`)
+        .toPromise()
+        .then((fair: any) => ({
+          ...fair,
+          logoImage: `${this.url}/${fair.logoImage}`,
+        }));
   }
 
   saveFair(payload, logoImage) {

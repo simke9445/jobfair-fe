@@ -57,7 +57,7 @@ export class ContestDetailsComponent implements OnInit {
     });
   }
 
-  async onApplicationApprove() {
+  async onApplicationStatusUpdate(status: ContestApplicationStatus) {
     try {
       this.loading = true;
       const formValue = this.applicationsForm.value.applications;
@@ -68,13 +68,21 @@ export class ContestDetailsComponent implements OnInit {
 
       await this.contestService.updateContestApplications({
         applicationIds,
-        status: ContestApplicationStatus.Accepted,
+        status,
       }, this.id);
       this.fetchData();
       this.loading = false;
     } catch (err) {
       this.loading = false;
     }
+  }
+
+  onApplicationApprove() {
+    this.onApplicationStatusUpdate(ContestApplicationStatus.Accepted);
+  }
+
+  onApplicationReject() {
+    this.onApplicationStatusUpdate(ContestApplicationStatus.Rejected);
   }
 
   async fetchData() {

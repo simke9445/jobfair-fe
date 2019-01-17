@@ -56,7 +56,15 @@ li {
   margin: 20px 0;
 }
 
+ul, li {
+  padding: 0;
+}
+
 .avatar-image {
   max-width: 300px;
   max-height: 300px;
+}
+
+.mat-divider {
+  margin: 20px 0;
 }

@@ -1,7 +1,5 @@
 :host {
-  width: 600px;
-  max-height: 600px;
-  overflow-y: auto;
+  display: flex;
 }
 
 .label-field {
@@ -24,4 +22,28 @@ ul, li {
 .label-container > app-label-field {
   margin: 5px;
   flex: 0 1 200px;
+}
+
+.logo-container {
+  margin: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card-container {
+  width: 600px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.logo-image {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.mat-divider {
+  margin: 20px 0;
+  position: relative !important;
 }

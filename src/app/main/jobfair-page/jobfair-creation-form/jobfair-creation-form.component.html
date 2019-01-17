@@ -28,26 +28,26 @@
             <mat-form-field appearance="standard">
               <mat-label>Start Date</mat-label>
               <input matInput readonly [matDatepicker]="pickerStartDate" formControlName="startDate">
-              <mat-datepicker-toggle matSuffix disabled [for]="pickerStartDate"></mat-datepicker-toggle>
+              <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
               <mat-datepicker #pickerStartDate></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>End Date</mat-label>
               <input matInput readonly [matDatepicker]="pickerEndDate" formControlName="endDate">
-              <mat-datepicker-toggle matSuffix disabled [for]="pickerEndDate"></mat-datepicker-toggle>
+              <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
               <mat-datepicker #pickerEndDate></mat-datepicker>
             </mat-form-field>
           </div>
           <div class='form__content--split__side'>
             <mat-form-field appearance="standard">
               <mat-label>Start Time</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="startTimePicker" [format]="24"
+              <input matInput readonly [ngxTimepicker]="startTimePicker" [format]="24"
                 formControlName="startTime">
               <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
             </mat-form-field>
             <mat-form-field appearance="standard">
               <mat-label>End Time</mat-label>
-              <input matInput readonly [disableClick]="true" [ngxTimepicker]="endTimePicker" [format]="24"
+              <input matInput readonly [ngxTimepicker]="endTimePicker" [format]="24"
                 formControlName="endTime">
               <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
             </mat-form-field>
@@ -230,10 +230,10 @@
         <h1>Schedules</h1>
         <ul *ngFor="let schedule of formValues.schedules">
           <li class="label-container">
+            <app-label-field [value]="schedule.from | date: 'medium'" label="From"></app-label-field>
+            <app-label-field [value]="schedule.to | date: 'medium'" label="To"></app-label-field>
             <app-label-field [value]="schedule.type" label="Type"></app-label-field>
             <app-label-field [value]="schedule.area" label="Area"></app-label-field>
-            <app-label-field [value]="schedule.from" label="From"></app-label-field>
-            <app-label-field [value]="schedule.to" label="To"></app-label-field>
           </li>
         </ul>
         <mat-divider></mat-divider>

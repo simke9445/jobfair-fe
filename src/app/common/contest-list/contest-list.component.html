@@ -1,3 +1,4 @@
+<p class="empty-state" *ngIf="!contests || contests.length === 0">There are no available contests.</p>
 <mat-card class="contest-card" *ngFor="let contest of contests">
   <mat-card-content>
     <h4 mat-line>

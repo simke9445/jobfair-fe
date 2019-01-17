@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { addHours, format, parse } from 'date-fns';
 import { Subscription } from 'rxjs';
 
@@ -16,6 +16,7 @@ export class ApplicationStatusModalComponent implements OnInit, OnDestroy {
   loading = false;
   fromValueChange: Subscription;
   updateForm: FormGroup;
+  scheduleControls: FormArray;
 
   constructor(
     private dialogRef: MatDialogRef<ApplicationStatusModalComponent>,
@@ -28,22 +29,24 @@ export class ApplicationStatusModalComponent implements OnInit, OnDestroy {
     return this.data.action;
   }
 
+  get schedules() {
+    return this.data.schedules;
+  }
+
   ngOnInit() {
-    const { action, application } = this.data;
+    const { action, application, schedules } = this.data;
 
     switch (action) {
       case 'update':
         this.updateForm = this.formBuilder.group({
-          from: [application.schedule.from, Validators.required],
-          to: [application.schedule.to, Validators.required],
           status: [application.status],
+          schedules: this.formBuilder.array(schedules.map(() => false)),
         });
         break;
       case 'approve':
         this.updateForm = this.formBuilder.group({
-          from: ['', Validators.required],
-          to: ['', Validators.required],
-          status: [JobFairApplicationStatus.Accepted]
+          status: [JobFairApplicationStatus.Accepted],
+          schedules: this.formBuilder.array(schedules.map(() => false)),
         });
         break;
       case 'reject':
@@ -57,12 +60,7 @@ export class ApplicationStatusModalComponent implements OnInit, OnDestroy {
     }
 
     if (action === 'update' || action === 'approve') {
-      this.fromValueChange = this.updateForm.controls.from.valueChanges.subscribe(value => {
-        const placeholderDate = parse(`2014-02-11T${value}:00`);
-        const toValue = format(addHours(placeholderDate, 1), 'HH:mm');
-
-        this.updateForm.controls.to.setValue(toValue);
-      })
+      this.scheduleControls = (this.updateForm.controls.schedules as any).controls;
     }
   }
 
@@ -75,7 +73,17 @@ export class ApplicationStatusModalComponent implements OnInit, OnDestroy {
 
     try {
       const { application } = this.data;
-      const payload = this.updateForm.value;
+      let payload = this.updateForm.value;
+
+      if (payload.schedules) {
+        payload = {
+          ...payload,
+          schedules: this.schedules
+            .filter((_, index) => payload.schedules[index])
+            .map(x => x._id),
+        };
+      }
+
       await this.jobfairService.updateFairApplication(payload, application.fair, application._id);
       this.onCancel(payload);
       this.loading = false;

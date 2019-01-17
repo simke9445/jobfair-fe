@@ -178,7 +178,7 @@
 </form>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onClose()">Close</button>
-  <button mat-raised-button (click)="onSave()">
+  <button mat-raised-button color="primary" [disabled]="biographyForm.invalid" (click)="onSave()">
     <div class="save-control">
       <span>Save</span>
       <ng-container *ngIf="loading">

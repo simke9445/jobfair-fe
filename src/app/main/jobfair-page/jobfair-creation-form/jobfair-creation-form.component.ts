@@ -1,19 +1,21 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
 
 import { validateJobFairJSON, validatePackageJSON } from 'src/utils/parsing';
-import { jobFairFromJSON, jobFairServicesFromJSON, jobFairPackagesFromJSON, JobFairSchedule, JobFairPackage, JobFairService } from 'src/models/jobfair';
+import { jobFairFromJSON, jobFairServicesFromJSON, jobFairPackagesFromJSON, JobFairSchedule, JobFairPackage, JobFairService, schedulesFromPeriod } from 'src/models/jobfair';
 import { jobFairScheduleTypes } from 'src/constants';
 import { JobfairService } from 'src/services/jobfair.service';
+import { Observable, combineLatest, Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-jobfair-creation-form',
   templateUrl: './jobfair-creation-form.component.html',
   styleUrls: ['./jobfair-creation-form.component.css']
 })
-export class JobfairCreationFormComponent implements OnInit {
+export class JobfairCreationFormComponent implements OnInit, OnDestroy {
   @Output('jobFairSubmit') jobFairSubmit$ = new EventEmitter();
 
   uploadFilesStep: FormGroup;
@@ -27,6 +29,8 @@ export class JobfairCreationFormComponent implements OnInit {
   serviceControls: FormArray;
 
   jobFairScheduleTypes = jobFairScheduleTypes;
+
+  combinedSubscription: Subscription;
 
   fileOptions = {
     accept: '.json,application/json',
@@ -48,6 +52,7 @@ export class JobfairCreationFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private jobfairService: JobfairService,
+    private toastrService: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -67,7 +72,7 @@ export class JobfairCreationFormComponent implements OnInit {
     });
     this.advancedInfoStep = this.formBuilder.group({
       logoImage: ['', Validators.required],
-      schedules: this.formBuilder.array([]),
+      schedules: this.formBuilder.array([], Validators.required),
     });
     this.packageStep = this.formBuilder.group({
       packages: this.formBuilder.array([]),
@@ -78,6 +83,17 @@ export class JobfairCreationFormComponent implements OnInit {
     this.scheduleControls = <FormArray>this.advancedInfoStep.controls.schedules;
     this.packageControls = <FormArray>this.packageStep.controls.packages;
     this.serviceControls = <FormArray>this.packageStep.controls.services;
+
+    this.combinedSubscription = combineLatest(
+      this.basicInfoStep.get('startDate').valueChanges,
+      this.basicInfoStep.get('endDate').valueChanges,
+      this.basicInfoStep.get('startTime').valueChanges,
+      this.basicInfoStep.get('endTime').valueChanges,
+    ).subscribe(([startDate, endDate, startTime, endTime]) => this.createSchedules(startDate, endDate, startTime, endTime));
+  }
+
+  ngOnDestroy() {
+    this.combinedSubscription.unsubscribe();
   }
 
   createSchedule(schedule?: JobFairSchedule) {
@@ -109,6 +125,18 @@ export class JobfairCreationFormComponent implements OnInit {
     });
   }
 
+  createSchedules(startDate: Date, endDate: Date, startTime: string, endTime: string) {
+    const schedules = schedulesFromPeriod(startDate, endDate, startTime, endTime);
+    const clearFormArray = (formArray: FormArray) => {
+      while (formArray.length !== 0) {
+        formArray.removeAt(0);
+      }
+    }
+
+    clearFormArray(this.scheduleControls);
+    schedules.forEach(schedule => this.scheduleControls.push(this.createSchedule(schedule)));
+  }
+
   onJobFairJSONReady(jobFairJSON: any) {
     try {
       const jfJSON = validateJobFairJSON(jobFairJSON);
@@ -120,13 +148,12 @@ export class JobfairCreationFormComponent implements OnInit {
       });
 
       areas.forEach(area => this.areaControls.push(this.formBuilder.control(area)));
-      // schedules.forEach(schedule => this.scheduleControls.push(this.createSchedule(schedule)));
-      this.scheduleControls.push(this.createSchedule(schedules[0]));
 
       this.uploadFilesStep.patchValue({
         jobFairFile: true,
       });
     } catch (err) {
+      this.toastrService.error('JobFair JSON File Parsing failed! Please check the file for structural errors.');
       console.log(err);
     }
   }
@@ -145,6 +172,7 @@ export class JobfairCreationFormComponent implements OnInit {
         packageFile: true,
       });
     } catch (err) {
+      this.toastrService.error('Packages JSON File Parsing failed! Please check the file for structural errors.');
       console.log(err);
     }
   }

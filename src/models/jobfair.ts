@@ -81,8 +81,8 @@ export interface JobFair {
 
 export interface JobFairSchedule {
   _id?: string;
-  from: string;
-  to: string;
+  from: Date;
+  to: Date;
   type: string;
   area: string;
   application?: JobFairApplication;
@@ -106,29 +106,29 @@ export interface JobFairService {
   description: string;
 }
 
-const schedulesFromJSON = (json: JobFairJSON): JobFairSchedule[] => {
+export const schedulesFromPeriod = (startDate: Date, endDate: Date, startTime: string, endTime: string) => {
   const placeholderDate = '2014-02-11T';
-  const endTimeDate = parse(`${placeholderDate}${json.Fairs[0].EndTime}`);
-  const startTimeDate = parse(`${placeholderDate}${json.Fairs[0].StartTime}`);
+  const endTimeDate = parse(`${placeholderDate}${endTime}`);
+  const startTimeDate = parse(`${placeholderDate}${startTime}`);
   const midnightTimeDate = parse(`${placeholderDate}00:00:00`);
 
   const hoursInBetween = differenceInHours(endTimeDate, startTimeDate);
   const hoursFromStart = differenceInHours(startTimeDate, midnightTimeDate);
   const hoursFromEnd = differenceInHours(endTimeDate, midnightTimeDate);
-  
-  const endDate = addHours(json.Fairs[0].EndDate, hoursFromEnd);
-  const startDate = addHours(json.Fairs[0].StartDate, hoursFromStart);
 
-  const daysInBetween = differenceInCalendarDays(endDate, startDate);
-  
+  const endDateWithTime = addHours(endDate, hoursFromEnd);
+  const startDateWithTime = addHours(startDate, hoursFromStart);
+
+  const daysInBetween = differenceInCalendarDays(endDateWithTime, startDateWithTime);
+
   let schedules: JobFairSchedule[] = [];
-  for (let day = 0; day < daysInBetween; day++) {
+  for (let day = 0; day <= daysInBetween; day++) {
     for (let hour = 0; hour < hoursInBetween; hour++) {
-      const from = addHours(addDays(startDate, day), hour);
-     
+      const from = addHours(addDays(startDateWithTime, day), hour);
+
       schedules.push({
-        from: format(from, 'HH:mm:ss'),
-        to: format(addHours(from, 1), 'HH:mm:ss'),
+        from,
+        to: addHours(from, 1),
         type: '',
         area: '',
         application: null,
@@ -137,6 +137,10 @@ const schedulesFromJSON = (json: JobFairJSON): JobFairSchedule[] => {
   }
 
   return schedules;
+}
+
+const schedulesFromJSON = (json: JobFairJSON): JobFairSchedule[] => {
+  return schedulesFromPeriod(json.Fairs[0].StartDate, json.Fairs[0].EndDate, json.Fairs[0].StartTime, json.Fairs[0].EndTime);
 }
 
 export const jobFairFromJSON = (json: JobFairJSON): JobFair => ({

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -26,26 +26,54 @@ export class BiographyModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
   ) { }
 
+  get biography() {
+    return this.data.student.biography;
+  }
+
   ngOnInit() {
-    this.biographyForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      streetAddress: '',
-      postalCode: '',
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      email: ['', Validators.email],
-      website: '',
-      skypeName: '',
-      educationExperiences: this.formBuilder.array([this.createExpForm()]),
-      workExperiences: this.formBuilder.array([this.createExpForm()]),
-      spokenLanguages: this.formBuilder.array([]),
-      skills: this.formBuilder.array([]),
-    });
+    this.biographyForm = this.createBiographyForm(this.biography);
 
     this.skills = this.biographyForm.get('skills') as FormArray;
     this.spokenLanguages = this.biographyForm.get('spokenLanguages') as FormArray;
+  }
+
+  createBiographyForm(biography: any = {}) {
+    let educationExperiences = [{}];
+    if (biography && biography.educationExperiences && biography.educationExperiences.length > 0) {
+      educationExperiences = biography.educationExperiences;
+    }
+
+    let workExperiences = [{}];
+    if (biography && biography.workExperiences && biography.workExperiences.length > 0) {
+      workExperiences = biography.workExperiences;
+    }
+
+    let skills = [];
+    if (biography && biography.skills) {
+      skills = biography.skills;
+    }
+
+    let spokenLanguages = [];
+    if (biography && biography.spokenLanguages) {
+      spokenLanguages = biography.spokenLanguages;
+    }
+
+    return this.formBuilder.group({
+      firstName: [biography.firstName, Validators.required],
+      lastName: [biography.lastName, Validators.required],
+      streetAddress: biography.streetAddress,
+      postalCode: biography.postalCode,
+      city: [biography.city, Validators.required],
+      country: [biography.country, Validators.required],
+      phoneNumber: [biography.phoneNumber, Validators.required],
+      email: [biography.email, Validators.email],
+      website: biography.website,
+      skypeName: biography.skypeName,
+      educationExperiences: this.formBuilder.array(educationExperiences.map(x => this.createExpForm(x))),
+      workExperiences: this.formBuilder.array(workExperiences.map(x => this.createExpForm(x))),
+      spokenLanguages: this.formBuilder.array(spokenLanguages),
+      skills: this.formBuilder.array(skills),
+    });
   }
 
   onRemoveExp(type: string, index: number) {
@@ -59,17 +87,17 @@ export class BiographyModalComponent implements OnInit {
 
     exps.push(this.createExpForm());
   }
-  
-  createExpForm() {
+
+  createExpForm(exp: any = {}) {
     return this.formBuilder.group({
-      position: ['', Validators.required],
-      from: ['', Validators.required],
-      to: ['', Validators.required],
-      isOngoing: false,
-      organisationName: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      description: ['', Validators.required],
+      position: [exp.position, Validators.required],
+      from: [exp.from, Validators.required],
+      to: [exp.to, Validators.required],
+      isOngoing: exp.isOngoing,
+      organisationName: [exp.organisationName, Validators.required],
+      city: [exp.city, Validators.required],
+      country: [exp.country, Validators.required],
+      description: [exp.description, Validators.required],
     });
   }
 
@@ -108,12 +136,12 @@ export class BiographyModalComponent implements OnInit {
   }
 
   onClose(shouldRefresh) {
-    this.dialogRef.close({ shouldRefresh });
+    this.dialogRef.close(shouldRefresh);
   }
 
   async onSave() {
     this.loading = true;
-    
+
     try {
       await this.studentService.saveStudentBiography(this.biographyForm.value, this.data.student._id);
       this.loading = false;

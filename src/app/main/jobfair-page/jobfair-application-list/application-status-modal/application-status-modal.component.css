@@ -1,0 +1,30 @@
+ul, li {
+  list-style: none;
+  padding: 0;
+}
+
+.form-content {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.schedule-dates {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedule-item {
+  margin: 20px 0;
+}
+
+.schedule-type {
+  margin-left: 20px;
+  text-transform: capitalize;
+}
+
+.schedule-ctrl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
