@@ -1,9 +1,12 @@
 <p class="empty-state" *ngIf="!contests || contests.length === 0">There are no available contests.</p>
 <mat-card class="contest-card" *ngFor="let contest of contests">
+  <mat-card-header>
+    <img mat-card-avatar src="{{contest.company.image}}" />
+    <mat-card-title>{{contest.position}}</mat-card-title>
+  </mat-card-header>
   <mat-card-content>
     <h4 mat-line>
       <div class="contest-list-item">
-        <span class="position">{{contest.position}}</span>
         <span>{{contest.type}}</span>
         <button mat-raised-button color="primary" (click)="onDetailsClick(contest)">Details</button>
       </div>

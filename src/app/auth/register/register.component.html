@@ -15,7 +15,7 @@
       </mat-form-field>
       <mat-form-field appearance="standard">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password">
+        <input matInput type="password" formControlName="password">
         <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
           <div *ngIf="password.errors">
             <div *ngIf="password.errors.minlength">

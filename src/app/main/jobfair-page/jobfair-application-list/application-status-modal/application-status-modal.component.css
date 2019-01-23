@@ -28,3 +28,7 @@ ul, li {
   align-items: center;
   justify-content: space-between;
 }
+
+.comment {
+  width: 80%;
+}

@@ -42,7 +42,7 @@
 </div>
 <mat-card class="company-card" *ngFor="let company of companies">
   <mat-card-header>
-    <img mat-card-avatar src="{{company.logoImage}}" />
+    <img mat-card-avatar src="{{company.image}}" />
     <mat-card-title>{{company.name}}</mat-card-title>
     <mat-card-subtitle>{{company.bussinessArea}}</mat-card-subtitle>
     <button class="details-button" mat-raised-button color="primary" (click)="onDetailsClick(company)">

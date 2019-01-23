@@ -42,7 +42,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 403) {
+        if (error.status === 403 || error.status === 401) {
           this.localStorageService.clear();
           this.router.navigate(['/auth/login']);
         }

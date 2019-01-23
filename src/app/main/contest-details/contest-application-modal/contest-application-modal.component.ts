@@ -17,6 +17,10 @@ export class ContestApplicationModalComponent implements OnInit {
   applicationForm: FormGroup;
   student: any = {};
 
+  fileOptions = {
+    accept: 'application/pdf,application/vnd.ms-excel',
+  };
+
   constructor(
     private localStorageService: LocalStorageService,
     private formBuilder: FormBuilder,

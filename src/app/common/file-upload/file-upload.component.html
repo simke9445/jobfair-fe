@@ -1,2 +1,2 @@
-<input #fileInput type="file" accept="fileOptions.accept" (change)="onFileChange($event)" hidden />
+<input #fileInput type="file" [accept]="fileOptions.accept" (change)="onFileChange($event)" hidden />
 <button #fileButton mat-raised-button color="{{ isError ? 'warn' : 'basic' }}" (click)='onFileClick($event)'>{{inputName}}</button>

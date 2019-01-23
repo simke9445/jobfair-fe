@@ -21,7 +21,14 @@ export class ContestService {
 
     return this.httpClient.get<any[]>(`${this.url}/contests`, {
       params
-    }).toPromise();
+    }).toPromise()
+      .then((contests: any[]) => contests.map(contest => ({
+        ...contest,
+        company: {
+          ...contest.company,
+          image: `${this.url}/${contest.company.image}`
+        },
+      })));
   }
 
   getContestById(id: string) {

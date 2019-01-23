@@ -92,6 +92,10 @@
               <mat-datepicker-toggle matSuffix [for]="pickerEduTo"></mat-datepicker-toggle>
               <mat-datepicker #pickerEduTo></mat-datepicker>
             </mat-form-field>
+            <mat-form-field appearance="standard" class="mat-form-field--no-underline">
+              <input matInput style="display: none">
+              <mat-checkbox color="primary" formControlName="isOngoing">Is ongoing</mat-checkbox>
+            </mat-form-field>
           </div>
         </div>
         <button mat-raised-button (click)="onRemoveExp('education', i)">Remove</button>
@@ -142,6 +146,10 @@
               <input matInput [matDatepicker]="pickerWorkTo" formControlName="to">
               <mat-datepicker-toggle matSuffix [for]="pickerWorkTo"></mat-datepicker-toggle>
               <mat-datepicker #pickerWorkTo></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="mat-form-field--no-underline">
+              <input matInput style="display: none">
+              <mat-checkbox color="primary" formControlName="isOngoing">Is ongoing</mat-checkbox>
             </mat-form-field>
           </div>
         </div>

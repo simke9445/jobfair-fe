@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { StudentService } from 'src/services/student.service';
 
 import { BiographyModalComponent } from './biography-modal/biography-modal.component';
+import { LocalStorageService } from 'src/services/localStorage.service';
 
 @Component({
   selector: 'app-student-details',
@@ -15,11 +16,13 @@ export class StudentDetailsComponent implements OnInit {
   student = {};
   loading = false;
   id = null;
+  userId = null;
 
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private localStorageService: LocalStorageService,
   ) { }
 
   ngOnInit() {
@@ -27,6 +30,8 @@ export class StudentDetailsComponent implements OnInit {
       this.id = map.get('id');
       this.fetchData();
     });
+
+    this.userId = this.localStorageService.get('id');
   }
 
   onBiographyUpdate(student) {

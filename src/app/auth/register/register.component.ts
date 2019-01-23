@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
     website: new FormControl(''),
     bussinessArea: new FormControl('', [Validators.required]),
     specialization: new FormControl(''),
-    logoImage: new FormControl(null),
+    logoImage: new FormControl(null, [Validators.required]),
   });
 
   bussinessAreas = bussinessAreas;

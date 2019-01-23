@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-file-upload',
@@ -19,7 +20,9 @@ export class FileUploadComponent implements OnInit {
 
   isError = false;
 
-  constructor() { }
+  constructor(
+    private toastrService: ToastrService,
+  ) { }
 
   ngOnInit() {
   }
@@ -39,6 +42,7 @@ export class FileUploadComponent implements OnInit {
 
   onFileFormDataReady(fileFormData) {
     this.fileFormDataReady$.emit(fileFormData);
+    this.toastrService.success('File successfully loaded!');
   }
 
   onImageLoad(reader: FileReader, file: File) {
@@ -59,6 +63,7 @@ export class FileUploadComponent implements OnInit {
       }
       else {
         // display an error message
+        this.toastrService.error(`Wrong image size! Image should be in ${minWidth}x${minHeight} - ${maxWidth}x${maxHeight} range.`);
         this.isError = true;
       }
     };
@@ -71,6 +76,7 @@ export class FileUploadComponent implements OnInit {
       this.submitResult(parsedJSON, file.name);
     } catch (err) {
       this.isError = true;
+      this.toastrService.error(`Wrong json format! Parsing failed.`);
     }
   }
 

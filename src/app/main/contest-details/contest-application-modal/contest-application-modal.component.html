@@ -13,7 +13,7 @@
       <mat-label>Cover Letter</mat-label>
       <textarea matInput formControlName="coverLetter"></textarea>
     </mat-form-field>
-    <app-file-upload type="file" name="Cover Letter pdf" (fileReady)="onPdfReady($event)"></app-file-upload>
+    <app-file-upload type="file" [options]="fileOptions" name="Cover Letter pdf" (fileReady)="onPdfReady($event)"></app-file-upload>
   </ng-container>
 </form>
 <div mat-dialog-actions>

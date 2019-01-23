@@ -24,7 +24,11 @@ export class CompanyService {
 
     return this.httpClient.get<Company[]>(`${this.url}/companies`, {
       params
-    }).toPromise();
+    }).toPromise()
+      .then((companies: any[]) => companies.map((company: any) => ({
+        ...company,
+        image: `${this.url}/${company.image}`,
+      })));
   }
 
   getCompanyById(id: string) {

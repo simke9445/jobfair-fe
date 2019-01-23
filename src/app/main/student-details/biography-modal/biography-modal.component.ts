@@ -92,7 +92,7 @@ export class BiographyModalComponent implements OnInit {
     return this.formBuilder.group({
       position: [exp.position, Validators.required],
       from: [exp.from, Validators.required],
-      to: [exp.to, Validators.required],
+      to: exp.to,
       isOngoing: exp.isOngoing,
       organisationName: [exp.organisationName, Validators.required],
       city: [exp.city, Validators.required],
